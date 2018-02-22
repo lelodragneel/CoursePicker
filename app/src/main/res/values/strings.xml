@@ -14,4 +14,5 @@
         completions."
     </string>
     <string name="title_activity_login">Login</string>
+    <string name="title_activity_courses">CoursesActivity</string>
 </resources>
