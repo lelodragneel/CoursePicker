@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "556437435708",
+    "firebase_url": "https://courseselection-2ce4a.firebaseio.com",
+    "project_id": "courseselection-2ce4a",
+    "storage_bucket": "courseselection-2ce4a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:556437435708:android:dfeb5e7e2cb37aa1",
+        "android_client_info": {
+          "package_name": "com.example.project.coursepicker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "556437435708-qkthislcmf8bo094igqmu9hb4691o4tj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQsjbspjyu8H9sV8UmODDYdgT_jYMfxX0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
