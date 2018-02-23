@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * TODO: remove after connecting to a real authentication system.
      */
     private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
+            "foo@example.com:hello", "ab123456:word1234$"
     };
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -139,14 +139,90 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return email.contains("@");
+
+
+	//user name length must be 8 characters
+            if (email.length() == 8){
+                return true;
+            }
+	//user names first two characters must be letters
+            Boolean condition1 = false;
+            Boolean condition2 = false;
+
+            int ascii = (int) email.charAt(0);
+            if ((ascii >= 65 && ascii <= 90) || ascii >= 97 && ascii <= 122){
+                condition1 = true;
+            }
+            ascii = (int) email.charAt(1);
+            if ((ascii >= 65 && ascii <= 90) || ascii >= 97 && ascii <= 122){
+                condition2 = true;
+            }
+            if (condition1 == true && condition2 == true){
+                return true;
+            }
+
+	//user names last six characters must be numbers
+            for (int i = email.length()-6; i < email.length(); i++){
+                ascii = (int) email.charAt(i);
+                if (!(ascii >= 48 && ascii <= 57)){
+                    return false;
+                }
+            }
+
+        return true;
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
-    }
 
+        //TODO: Replace this with your own logic
+
+        String x = "word1234$";
+
+		//check if password is direct match
+            if (!password.equals(x)){
+                return false;
+            }
+
+
+        //check length of password
+            if (password.length() < 8) {
+                return false;
+            }
+
+	//check for at least 1 special character
+            for (int i=0; i < password.length(); i++){
+                int ascii = (int) password.charAt(i);
+                if (!(ascii >= 65 && ascii <= 90) && !(ascii >= 97 && ascii <= 122)){
+                    return true;
+                }
+            }
+
+ 		//check for at least 1 number character
+            for (int i=0; i < password.length(); i++){
+                int ascii = (int) password.charAt(i);
+                if (ascii >= 48 && ascii <= 57){
+                    return true;
+                }
+            }
+
+	//check for at least 1 upper case and 1 lower case character
+            boolean upper = false;
+            boolean lower = false;
+            for (int i=0; i < password.length(); i++){
+                int ascii = (int) password.charAt(i);
+                if (ascii >= 65 && ascii <= 90){
+                    upper = true;
+                }
+                if (ascii >= 97 && ascii <= 122){
+                    lower = true;
+                }
+                if (upper == true && lower == true){
+                    return true;
+                }
+            }
+            return false;
+
+    }
     /**
      * Shows the progress UI and hides the login form.
      */
