@@ -15,4 +15,11 @@
     </string>
     <string name="title_activity_login">Login</string>
     <string name="title_activity_courses">CoursesActivity</string>
+    <string name="Add">Add</string>
+    <string name="Drop">Drop</string>
+    <string-array name="term">
+        <item>--SELECT--</item>
+        <item>Fall</item>
+        <item>Winter</item>
+    </string-array>
 </resources>
