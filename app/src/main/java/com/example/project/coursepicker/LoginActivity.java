@@ -103,6 +103,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         boolean cancel = false;
         View focusView = null;
 
+        //TODO: Remove these comment brackets after testing
+        /*
+
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             passwordView.setError(getString(R.string.error_invalid_password));
@@ -133,8 +136,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             Intent intent = new Intent(this, Dashboard.class);
             startActivity(intent);
             /*authTask = new UserLoginTask(email, password);
-            authTask.execute((Void) null);*/
+            authTask.execute((Void) null);*//*
+
         }
+        *///TODO:Remove these comment brackets after testing
+
     }
 
     private boolean isEmailValid(String email) {
