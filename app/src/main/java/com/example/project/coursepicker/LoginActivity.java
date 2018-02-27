@@ -51,6 +51,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View progressView;
     private View loginFormView;
 
+    private boolean testMode = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +76,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         emailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                // testMode is a bool that allows us to bypass login screen if set to true
+                if (testMode) {
+                    startDashboard();
+                } else {
+                    attemptLogin();
+                }
             }
         });
 
@@ -103,9 +110,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         boolean cancel = false;
         View focusView = null;
 
-        //TODO: Remove these comment brackets after testing
-        /*
-
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             passwordView.setError(getString(R.string.error_invalid_password));
@@ -133,14 +137,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // perform the user login attempt.
             showProgress(true);
             //TODO: Program username and password checks here, delete unused methods
-            Intent intent = new Intent(this, Dashboard.class);
-            startActivity(intent);
+            startDashboard();
             /*authTask = new UserLoginTask(email, password);
-            authTask.execute((Void) null);*//*
-
+            authTask.execute((Void) null);*/
         }
-        *///TODO:Remove these comment brackets after testing
 
+    }
+
+    private void startDashboard() {
+        Intent intent = new Intent(this, Dashboard.class);
+        startActivity(intent);
     }
 
     private boolean isEmailValid(String email) {
