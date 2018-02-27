@@ -1,0 +1,16 @@
+{
+  "rules": {
+    ".read": "true",
+    ".write": "false",
+    "Users": {
+      "User1": {
+        "Username": {
+          ".validate": "newData.isString() && newData.val().length < 50"
+        },
+        "Password": {
+          ".validate": "newData.isString() && newData.val().matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$/i)"
+        }
+      }
+    }
+  }
+}
