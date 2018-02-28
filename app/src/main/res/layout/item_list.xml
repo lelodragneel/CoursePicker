@@ -6,7 +6,7 @@
     android:orientation="horizontal">
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btn_courseAdd"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -30,7 +30,7 @@
         android:paddingTop="5dp"
         android:textSize="17dip"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button2"
+        app:layout_constraintEnd_toStartOf="@+id/btn_courseAdd"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

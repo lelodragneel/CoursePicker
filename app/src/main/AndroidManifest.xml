@@ -23,6 +23,7 @@
             android:name=".CoursesActivity"
             android:label="Courses"
             android:parentActivityName=".Dashboard"
+            android:launchMode='singleTask'
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
         <activity
             android:name=".Dashboard"

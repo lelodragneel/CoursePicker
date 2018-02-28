@@ -63,6 +63,7 @@ public class Dashboard extends AppCompatActivity {
 
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     Intent intent = new Intent(v.getContext(), CoursesActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // prevent multiple activities
                     startActivity(intent);
                     return true;
                 }
