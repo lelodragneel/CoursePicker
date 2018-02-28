@@ -53,10 +53,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private boolean testMode = true;
 
+    private Session session;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        //create a new session to store session variables
+        session = new Session(this);
+
         // Set up the login form.
         usernameView = (AutoCompleteTextView) findViewById(R.id.email);
 
@@ -137,6 +143,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // perform the user login attempt.
             showProgress(true);
             //TODO: Program username and password checks here, delete unused methods
+            //set loginID for session
+            session.ID(usernameView.getText().toString());
+
             startDashboard();
             /*authTask = new UserLoginTask(email, password);
             authTask.execute((Void) null);*/

@@ -24,15 +24,18 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-public class CoursesActivity extends AppCompatActivity {
+/**
+ * Created by Brianna on 2018-02-27.
+ */
+
+public class UserCourses extends AppCompatActivity{
 
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
     List<String> listDataHeader;
     HashMap<String, String> listDataChild;
 
-    Spinner ddTerm;
-    ArrayAdapter<CharSequence> termAdapter;
+    Session session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,26 +47,9 @@ public class CoursesActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        ddTerm = findViewById(R.id.spinner);
-        termAdapter = ArrayAdapter.createFromResource(this, R.array.term, android.R.layout.simple_spinner_item);
-        termAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        ddTerm.setAdapter(termAdapter);
 
         expListView = (ExpandableListView) findViewById(R.id.exp);
 
-        ddTerm.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
-                // build courses list
-                prepareListData();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent)
-            {
-            }
-        });
 
         prepareListData();
 
@@ -72,33 +58,28 @@ public class CoursesActivity extends AppCompatActivity {
         // setting list adapter
         expListView.setAdapter(listAdapter);
     }
-
     /*
      * Build the courses list
      */
     private void prepareListData() {
+
+        String ID = session.getID();
 
         listDataHeader = new ArrayList<String>();
         listDataChild = new HashMap<String, String>();
 
         //Global variables (for DB connection)
         AppData appData = (AppData)getApplication();
-
-        Query term;
+        Query userCourses;
 
         //Set up DB connection
         appData.DB = FirebaseDatabase.getInstance();
-        appData.firebaseReference = appData.DB.getReference("Course");
+        appData.firebaseReference = appData.DB.getReference("Users");
 
-
-        if (ddTerm.getSelectedItem().equals("-- All --"))
-            term = appData.firebaseReference.orderByValue();
-        else
-            //query DB for courses listed in the specified term (according to user drop down selection)
-            term = appData.firebaseReference.orderByChild("term").equalTo(ddTerm.getSelectedItem().toString());
+        userCourses = appData.firebaseReference.orderByChild("Users").equalTo(ID).orderByChild("Courses");
 
         //set up listener to pull course data from DB
-        term.addValueEventListener(new ValueEventListener() {
+        userCourses.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 int i = 0;
@@ -108,9 +89,8 @@ public class CoursesActivity extends AppCompatActivity {
 
                     listDataHeader.add(courses.name);
                     listDataChild.put(listDataHeader.get(i), "Days: " + courses.classDays +
-                                                           "\nTime: " + courses.classTime +
-                                                           "\nTerm: " + courses.term +
-                                                            "\nPrerequisites: " + courses.prerequisites);
+                                                             "\nTime: " + courses.classTime +
+                                                             "\nTerm: " + courses.term);
                     i++;
                 }
             }

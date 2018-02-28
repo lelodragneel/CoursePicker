@@ -18,7 +18,7 @@
     <string name="Add">Add</string>
     <string name="Drop">Drop</string>
     <string-array name="term">
-        <item>--SELECT--</item>
+        <item>-- All --</item>
         <item>Fall</item>
         <item>Winter</item>
     </string-array>

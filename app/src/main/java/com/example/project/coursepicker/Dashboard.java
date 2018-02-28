@@ -44,7 +44,7 @@ public class Dashboard extends AppCompatActivity {
                     v.setActivated(true);
 
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    // TODO: activity intent
+                    //TODO: update this with actual calendar
                     return true;
                 }
                 return false;
