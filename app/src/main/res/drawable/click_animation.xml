@@ -2,7 +2,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android" android:exitFadeDuration="@android:integer/config_longAnimTime">
 
     <item android:state_activated="true"
-         android:drawable="@color/white" />
+         android:drawable="@color/darkGrey" />
 
     <item android:state_activated="false"
         android:drawable="@android:color/transparent" />

@@ -1,12 +1,11 @@
 package com.example.project.coursepicker;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 public class Dashboard extends AppCompatActivity {
 
@@ -25,11 +24,7 @@ public class Dashboard extends AppCompatActivity {
                 else
                     v.setActivated(true);
 
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    // TODO: activity intent
-                    return true;
-                }
-                return false;
+                return event.getAction() == MotionEvent.ACTION_UP;
             }
         });
 
@@ -43,11 +38,7 @@ public class Dashboard extends AppCompatActivity {
                 else
                     v.setActivated(true);
 
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    //TODO: update this with actual calendar
-                    return true;
-                }
-                return false;
+                return event.getAction() == MotionEvent.ACTION_UP;
             }
         });
 
@@ -63,7 +54,6 @@ public class Dashboard extends AppCompatActivity {
 
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     Intent intent = new Intent(v.getContext(), CoursesActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // prevent multiple activities
                     startActivity(intent);
                     return true;
                 }
@@ -81,11 +71,7 @@ public class Dashboard extends AppCompatActivity {
                 else
                     v.setActivated(true);
 
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    // TODO: activity intent
-                    return true;
-                }
-                return false;
+                return event.getAction() == MotionEvent.ACTION_UP;
             }
         });
     }

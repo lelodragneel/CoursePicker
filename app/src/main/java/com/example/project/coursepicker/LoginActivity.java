@@ -3,24 +3,20 @@ package com.example.project.coursepicker;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
-
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -64,21 +60,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         session = new Session(this);
 
         // Set up the login form.
-        usernameView = (AutoCompleteTextView) findViewById(R.id.email);
+        usernameView = findViewById(R.id.email);
 
-        passwordView = (EditText) findViewById(R.id.password);
-        /*passwordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
-            }
-        });*/
+        passwordView = findViewById(R.id.password);
 
-        Button emailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        Button emailSignInButton = findViewById(R.id.email_sign_in_button);
         emailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {

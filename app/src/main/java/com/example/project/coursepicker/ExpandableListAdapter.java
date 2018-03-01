@@ -19,11 +19,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private Context _context;
     private List<String> _listDataHeader; // header titles
     // child data in format of header title, child title
-    private HashMap<String, String> _listDataChild;
+    private HashMap<String, Course> _listDataChild;
 
 
     public ExpandableListAdapter(Context context, List<String> listDataHeader,
-                                 HashMap<String, String> listChildData) {
+                                 HashMap<String, Course> listChildData) {
         this._context = context;
         this._listDataHeader = listDataHeader;
         this._listDataChild = listChildData;
@@ -43,7 +43,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
-        final String childText = (String) getChild(groupPosition, childPosition);
+        final Course childText = (Course) getChild(groupPosition, childPosition);
 
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
@@ -51,10 +51,20 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             convertView = infalInflater.inflate(R.layout.item_list, null);
         }
 
-        TextView txtListChild = (TextView) convertView
-                .findViewById(R.id.lblListItem);
+        // extract course details
+        TextView textView_desc = convertView.findViewById(R.id.textView_desc);
+        TextView textView_req = convertView.findViewById(R.id.textView_req);
+        TextView textView_courseDays = convertView.findViewById(R.id.textView_courseDays);
+        TextView textView_courseSeats = convertView.findViewById(R.id.textView_courseSeats);
+        TextView textView_courseTimes = convertView.findViewById(R.id.textView_courseTimes);
 
-        txtListChild.setText(childText);
+        // display on content view
+        textView_desc.setText(childText.description);
+        textView_req.setText("Prerequisites: " + childText.prerequisites);
+        textView_courseDays.setText("Days\n" + childText.classDays);
+        textView_courseSeats.setText("Seats\n" + childText.seatsAvail + "");
+        textView_courseTimes.setText("Hours\n" + childText.classTime);
+
         return convertView;
     }
 
@@ -88,7 +98,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             convertView = infalInflater.inflate(R.layout.course_list, null);
         }
 
-        TextView lblListHeader = (TextView) convertView
+        TextView lblListHeader = convertView
                 .findViewById(R.id.lblListHeader);
         lblListHeader.setTypeface(null, Typeface.BOLD);
         lblListHeader.setText(headerTitle);
