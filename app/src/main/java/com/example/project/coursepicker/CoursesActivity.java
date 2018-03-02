@@ -39,17 +39,16 @@ public class CoursesActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         // init data structures for accordion
-        listDataChild = new HashMap<String, Course>();
-        listDataHeader = new ArrayList<String>();
+        listDataChild = new HashMap<>();
+        listDataHeader = new ArrayList<>();
 
         ddTerm = findViewById(R.id.spinner);
         expListView = findViewById(R.id.exp);
 
         // set spinner adapter
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, new String[] {"Fall", "Winter"});
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ddTerm.setAdapter(adapter);
@@ -80,7 +79,7 @@ public class CoursesActivity extends AppCompatActivity {
                 // clear previous data
                 fallCourses = new ArrayList<>();
 
-                // loop through every course in db
+                // loop through every fall course in db
                 for (DataSnapshot pSnapShot : dataSnapshot.getChildren()) {
 
                     // extract course details
@@ -97,7 +96,6 @@ public class CoursesActivity extends AppCompatActivity {
 
                     // refresh accordion
                     refreshAccordion();
-
                 }
             }
 
@@ -114,7 +112,7 @@ public class CoursesActivity extends AppCompatActivity {
                 // clear previous data
                 winterCourses = new ArrayList<>();
 
-                // loop through every course in db
+                // loop through every winter course in db
                 for (DataSnapshot pSnapShot : dataSnapshot.getChildren()) {
 
                     // extract course details
@@ -152,22 +150,25 @@ public class CoursesActivity extends AppCompatActivity {
         listDataHeader = new ArrayList<>();
         listDataChild = new HashMap<>();
 
-        if (selected.equals("Fall")) {
-            if (fallCourses != null) {
-                for (Course i : fallCourses) {
-                    listDataHeader.add(i.name);
-                    listDataChild.put(i.name, i);
+        switch (selected) {
+            case "Fall":
+                if (fallCourses != null) {
+                    for (Course i : fallCourses) {
+                        listDataHeader.add(i.getName());
+                        listDataChild.put(i.getName(), i);
+                    }
                 }
-            }
-        } else if (selected.equals("Winter")) {
-            if (winterCourses != null) {
-                for (Course i : winterCourses) {
-                    listDataHeader.add(i.name);
-                    listDataChild.put(i.name, i);
+                break;
+            case "Winter":
+                if (winterCourses != null) {
+                    for (Course i : winterCourses) {
+                        listDataHeader.add(i.getName());
+                        listDataChild.put(i.getName(), i);
+                    }
                 }
-            }
-        } else {
-            Log.e("refreshAccordion","could not populate accordion");
+                break;
+            default:
+                Log.e("refreshAccordion","could not populate accordion");
         }
 
         // recreate adapter with new data

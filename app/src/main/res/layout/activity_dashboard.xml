@@ -10,12 +10,10 @@
         android:id="@+id/imageView5"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:background="@drawable/wallpaper"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/wallpaper" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -23,15 +21,14 @@
         android:layout_height="120dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
+        android:layout_marginTop="32dp"
         android:background="@drawable/click_animation"
+        android:clickable="true"
         android:orientation="vertical"
         app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="KeyboardInaccessibleWidget">
 
         <ImageView
             android:id="@+id/imageView"
@@ -46,12 +43,13 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:layout_weight="1"
             android:fontFamily="sans-serif-smallcaps"
             android:gravity="center|bottom"
             android:text="PROFILE"
             android:textAlignment="center"
-            android:textColor="@android:color/white"
+            android:textColor="@color/darkText"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -61,15 +59,14 @@
         android:layout_height="120dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
+        android:layout_marginTop="32dp"
         android:background="@drawable/click_animation"
+        android:clickable="true"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/linearLayout"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="KeyboardInaccessibleWidget">
 
         <ImageView
             android:id="@+id/imageView2"
@@ -83,12 +80,13 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:layout_weight="1"
             android:fontFamily="sans-serif-smallcaps"
             android:gravity="center|bottom"
             android:text="CALENDAR"
             android:textAlignment="center"
-            android:textColor="@android:color/white"
+            android:textColor="@color/darkText"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -101,12 +99,11 @@
         android:layout_marginTop="32dp"
         android:background="@drawable/click_animation"
         android:clickable="true"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
         android:orientation="vertical"
         app:layout_constraintEnd_toStartOf="@+id/linearLayout4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        tools:ignore="KeyboardInaccessibleWidget">
 
         <ImageView
             android:id="@+id/imageView3"
@@ -114,7 +111,6 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:clickable="false"
             android:gravity="center|bottom"
             app:srcCompat="@drawable/courses_64" />
 
@@ -122,13 +118,13 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:layout_weight="1"
-            android:clickable="false"
             android:fontFamily="sans-serif-smallcaps"
             android:gravity="center|bottom"
             android:text="COURSES"
             android:textAlignment="center"
-            android:textColor="@android:color/white"
+            android:textColor="@color/darkText"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -140,13 +136,12 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:clickable="true"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
         android:background="@drawable/click_animation"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/linearLayout3"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        tools:ignore="KeyboardInaccessibleWidget">
 
         <ImageView
             android:id="@+id/imageView4"
@@ -160,15 +155,97 @@
 
         <TextView
             android:id="@+id/textView3"
-            android:clickable="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:layout_weight="1"
+            android:clickable="false"
             android:fontFamily="sans-serif-smallcaps"
             android:gravity="center|bottom"
             android:text="SETTINGS"
             android:textAlignment="center"
-            android:textColor="@android:color/white"
+            android:textColor="@color/darkText"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/click_animation"
+        android:clickable="true"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayout6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+        tools:ignore="KeyboardInaccessibleWidget">
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:clickable="false"
+            android:gravity="center|bottom"
+            app:srcCompat="@drawable/settings_64" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            android:clickable="false"
+            android:fontFamily="sans-serif-smallcaps"
+            android:gravity="center|bottom"
+            android:text="NA"
+            android:textAlignment="center"
+            android:textColor="@color/darkText"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout6"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/click_animation"
+        android:clickable="true"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/linearLayout5"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+        tools:ignore="KeyboardInaccessibleWidget">
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:clickable="false"
+            android:gravity="center|bottom"
+            app:srcCompat="@drawable/logout_64" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            android:clickable="false"
+            android:fontFamily="sans-serif-smallcaps"
+            android:gravity="center|bottom"
+            android:text="LOGOUT"
+            android:textAlignment="center"
+            android:textColor="@color/darkText"
             android:textStyle="bold" />
     </LinearLayout>
 

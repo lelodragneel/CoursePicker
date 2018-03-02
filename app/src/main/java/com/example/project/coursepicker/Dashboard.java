@@ -19,12 +19,16 @@ public class Dashboard extends AppCompatActivity {
         l1.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (v.isActivated())
-                    v.setActivated(false);
-                else
-                    v.setActivated(true);
 
-                return event.getAction() == MotionEvent.ACTION_UP;
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    v.setActivated(true);
+                }
+
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    v.setActivated(false);
+                    return true;
+                }
+                return false;
             }
         });
 
@@ -33,12 +37,16 @@ public class Dashboard extends AppCompatActivity {
         l2.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (v.isActivated())
-                    v.setActivated(false);
-                else
-                    v.setActivated(true);
 
-                return event.getAction() == MotionEvent.ACTION_UP;
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    v.setActivated(true);
+                }
+
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    v.setActivated(false);
+                    return true;
+                }
+                return false;
             }
         });
 
@@ -47,12 +55,13 @@ public class Dashboard extends AppCompatActivity {
         l3.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (v.isActivated())
-                    v.setActivated(false);
-                else
+
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     v.setActivated(true);
+                }
 
                 if (event.getAction() == MotionEvent.ACTION_UP) {
+                    v.setActivated(false);
                     Intent intent = new Intent(v.getContext(), CoursesActivity.class);
                     startActivity(intent);
                     return true;
@@ -66,12 +75,36 @@ public class Dashboard extends AppCompatActivity {
         l4.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (v.isActivated())
-                    v.setActivated(false);
-                else
-                    v.setActivated(true);
 
-                return event.getAction() == MotionEvent.ACTION_UP;
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    v.setActivated(true);
+                }
+
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    v.setActivated(false);
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        // logout touch listener
+        LinearLayout l6 = findViewById(R.id.linearLayout6);
+        l6.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    v.setActivated(true);
+                }
+
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    v.setActivated(false);
+                    Intent intent = new Intent(v.getContext(), LoginActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
+                return false;
             }
         });
     }

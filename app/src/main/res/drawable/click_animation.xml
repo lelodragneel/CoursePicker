@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android" android:exitFadeDuration="@android:integer/config_longAnimTime">
+<selector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:exitFadeDuration="@android:integer/config_longAnimTime" >
 
-    <item android:state_activated="true"
-         android:drawable="@color/darkGrey" />
+    <item
+        android:state_activated="true" >
+        <shape android:shape="oval">
+            <solid android:color="@color/lightGrey" />
+        </shape>
+    </item>
 
-    <item android:state_activated="false"
-        android:drawable="@android:color/transparent" />
+    <item
+        android:state_activated="false" >
+        <shape android:shape="oval">
+            <solid android:color="@android:color/transparent" />
+        </shape>
+    </item>
 
 </selector>

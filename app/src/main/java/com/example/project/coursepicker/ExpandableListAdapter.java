@@ -17,12 +17,10 @@ import java.util.List;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private Context _context;
-    private List<String> _listDataHeader; // header titles
-    // child data in format of header title, child title
+    private List<String> _listDataHeader;
     private HashMap<String, Course> _listDataChild;
 
-
-    public ExpandableListAdapter(Context context, List<String> listDataHeader,
+    protected ExpandableListAdapter(Context context, List<String> listDataHeader,
                                  HashMap<String, Course> listChildData) {
         this._context = context;
         this._listDataHeader = listDataHeader;
@@ -59,11 +57,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         TextView textView_courseTimes = convertView.findViewById(R.id.textView_courseTimes);
 
         // display on content view
-        textView_desc.setText(childText.description);
-        textView_req.setText("Prerequisites: " + childText.prerequisites);
-        textView_courseDays.setText("Days\n" + childText.classDays);
-        textView_courseSeats.setText("Seats\n" + childText.seatsAvail + "");
-        textView_courseTimes.setText("Hours\n" + childText.classTime);
+        textView_desc.setText(childText.getDescription());
+        textView_req.setText("Prerequisites: " + childText.getPrerequisites());
+        textView_courseDays.setText("Days\n" + childText.getClassDays());
+        textView_courseSeats.setText("Seats\n" + childText.getSeatsAvail());
+        textView_courseTimes.setText("Hours\n" + childText.getClassTime());
 
         return convertView;
     }

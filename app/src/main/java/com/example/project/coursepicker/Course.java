@@ -4,14 +4,14 @@ import java.io.Serializable;
 
 public class Course implements Serializable {
 
-    public String classDays;
-    public String classTime;
-    public String description;
-    public String name;
-    public String prerequisites;
-    public int seatsAvail;
+    private String classDays;
+    private String classTime;
+    private String description;
+    private String name;
+    private String prerequisites;
+    private int seatsAvail;
 
-    public Course(String classDays, String classTime, String description, String name,
+    protected Course(String classDays, String classTime, String description, String name,
                   String prerequisites, int seatsAvail){
         this.classDays = classDays;
         this.classTime = classTime;
@@ -19,5 +19,29 @@ public class Course implements Serializable {
         this.name = name;
         this.prerequisites = prerequisites;
         this.seatsAvail = seatsAvail;
+    }
+
+    public String getClassDays() {
+        return classDays;
+    }
+
+    public String getClassTime() {
+        return classTime;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPrerequisites() {
+        return prerequisites;
+    }
+
+    public int getSeatsAvail() {
+        return seatsAvail;
     }
 }
