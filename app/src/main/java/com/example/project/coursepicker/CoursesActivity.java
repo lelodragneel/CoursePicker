@@ -72,7 +72,7 @@ public class CoursesActivity extends AppCompatActivity {
         // asynchronous listener to retrieve fall term data
         DatabaseReference db_fall = db_root.child("Fall Term "); // I lost half my brain cells due
                                                                  // to this extra space in the name
-        db_fall.addListenerForSingleValueEvent(new ValueEventListener() {
+        db_fall.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -105,7 +105,7 @@ public class CoursesActivity extends AppCompatActivity {
 
         // asynchronous listener to retrieve winter term data
         DatabaseReference db_winter = db_root.child("Winter Term");
-        db_winter.addListenerForSingleValueEvent(new ValueEventListener() {
+        db_winter.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -136,6 +136,33 @@ public class CoursesActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {}
         });
 
+    }
+
+    /*
+     * Function called by the "Add" buttons under accordion
+     * This will decrement the seat-count and add the user id to the course clicked
+     * Note: view.getTag() will return the course name clicked from accordion
+     */
+    public void addCourse(View view) {
+
+        String selected = ddTerm.getSelectedItem().toString();
+
+        switch (selected) {
+            case "Fall":
+                // TODO decrement seats available
+                // TODO add user id to specified course in firebase
+//                db_root.child("Fall Term ").child(view.getTag().toString())
+//                        .child("Seats Available").setValue(1);
+                break;
+            case "Winter":
+                // TODO decrement seats available
+                // TODO add user id to specified course in firebase
+//                db_root.child("Winter Term").child(view.getTag().toString())
+//                        .child("Seats Available").setValue(1);
+                break;
+        }
+
+        refreshAccordion();
     }
 
     /*

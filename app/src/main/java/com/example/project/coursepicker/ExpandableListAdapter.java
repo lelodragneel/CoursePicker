@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.HashMap;
@@ -48,6 +49,10 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.item_list, null);
         }
+
+        // tag the button with course name
+        Button btn_add = convertView.findViewById(R.id.btn_add);
+        btn_add.setTag(childText.getName());
 
         // extract course details
         TextView textView_desc = convertView.findViewById(R.id.textView_desc);

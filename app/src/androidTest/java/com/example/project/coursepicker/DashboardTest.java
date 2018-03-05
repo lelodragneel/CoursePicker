@@ -65,7 +65,7 @@ public class DashboardTest {
         }
 
         ViewInteraction appCompatButton = onView(
-                allOf(withId(R.id.btn_courseAdd), withText("Button"),
+                allOf(withId(R.id.btn_add), withText("Button"),
                         childAtPosition(
                                 withParent(withId(R.id.exp)),
                                 0),
