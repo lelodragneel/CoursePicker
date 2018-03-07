@@ -31,6 +31,9 @@ public class Schedule extends AppCompatActivity {
     ArrayList<Course> fallCourses;
     ArrayList<Course> winterCourses;
 
+    private String term;
+    private String username;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +73,7 @@ public class Schedule extends AppCompatActivity {
         db_root = FirebaseDatabase.getInstance().getReference();
 
         // asynchronous listener to retrieve fall term data
+        //DatabaseReference db_fall = db_root.child("Courses").child(username).child("Courses").child(term);
         DatabaseReference db_fall = db_root.child("Fall Term ");
         db_fall.addValueEventListener(new ValueEventListener() {
             @Override
@@ -81,6 +85,7 @@ public class Schedule extends AppCompatActivity {
                 // loop through every fall course in db
                 for (DataSnapshot pSnapShot : dataSnapshot.getChildren()) {
 
+                    //TODO:Extract different details for relevant courses and times
                     // extract course details
                     String name = pSnapShot.getKey();
                     String classDays = pSnapShot.child("Class Days").getValue(String.class);
@@ -92,6 +97,9 @@ public class Schedule extends AppCompatActivity {
                     // assign course details
                     fallCourses.add(new Course(classDays, classTime, description,
                             name, prerequisites, seatsAvail));
+
+
+                    //TODO: Add something here for conflict resolution
 
                     // refresh accordion
                     refreshAccordion();
@@ -114,6 +122,7 @@ public class Schedule extends AppCompatActivity {
                 // loop through every winter course in db
                 for (DataSnapshot pSnapShot : dataSnapshot.getChildren()) {
 
+                    //TODO:Extract different details for relevant courses and times
                     // extract course details
                     String name = pSnapShot.getKey();
                     String classDays = pSnapShot.child("Class Days").getValue(String.class);
@@ -168,6 +177,7 @@ public class Schedule extends AppCompatActivity {
      * Checks to see which term is selected in the spinner, then returns a database reference
      * pointing to the correct sub-database
      */
+
     private void refreshAccordion() {
 
         String selected = ddTerm.getSelectedItem().toString();
