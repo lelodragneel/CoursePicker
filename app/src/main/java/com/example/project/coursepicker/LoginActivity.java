@@ -60,11 +60,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         session = new Session(this);
 
         // Set up the login form.
-        usernameView = findViewById(R.id.email);
+        usernameView = findViewById(R.id.textView_email);
 
-        passwordView = findViewById(R.id.password);
+        passwordView = findViewById(R.id.textView_password);
 
-        Button emailSignInButton = findViewById(R.id.email_sign_in_button);
+        Button emailSignInButton = findViewById(R.id.btn_signIn);
         emailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -1,6 +1,7 @@
 package com.example.project.coursepicker;
 
 
+import android.support.test.espresso.DataInteraction;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -12,19 +13,23 @@ import android.view.ViewParent;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.is;
 
 @LargeTest
@@ -32,45 +37,87 @@ import static org.hamcrest.Matchers.is;
 public class DashboardTest {
 
     @Rule
-    public ActivityTestRule<Dashboard> mActivityTestRule = new ActivityTestRule<>(Dashboard.class);
+    public ActivityTestRule<LoginActivity> mActivityTestRule = new ActivityTestRule<>(LoginActivity.class);
 
     @Test
-    public void dashboardTest() {
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
+    public void dashboardTesting() {
+
+        ViewInteraction appCompatButton = onView(
+                allOf(withId(R.id.btn_signIn), withText("Sign in"),
+                        childAtPosition(
+                                allOf(withId(R.id.email_login_form),
+                                        childAtPosition(
+                                                withId(R.id.login_form),
+                                                0)),
+                                2)));
+        appCompatButton.perform(scrollTo(), click());
+
         try {
-            Thread.sleep(60000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        ViewInteraction linearLayout = onView(
-                allOf(withId(R.id.linearLayout3),
+        ViewInteraction linearLayout = onView(withId(R.id.linearLayout3));
+        linearLayout.perform(click());
+
+        ViewInteraction appCompatSpinner = onView(
+                allOf(withId(R.id.spinner),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
                                         0),
-                                3),
+                                1),
                         isDisplayed()));
-        linearLayout.perform(click());
+        appCompatSpinner.perform(click());
 
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
-        try {
-            Thread.sleep(3590164);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        ViewInteraction appCompatButton = onView(
-                allOf(withId(R.id.btn_add), withText("Button"),
+        DataInteraction appCompatCheckedTextView = onData(anything())
+                .inAdapterView(allOf(withClassName(is("com.android.internal.app.AlertController$RecycleListView")),
                         childAtPosition(
-                                withParent(withId(R.id.exp)),
+                                withClassName(is("android.widget.FrameLayout")),
+                                0)))
+                .atPosition(0);
+        appCompatCheckedTextView.perform(click());
+
+        ViewInteraction expandableListView = onView(
+                allOf(withId(R.id.exp),
+                        childAtPosition(
+                                allOf(withId(R.id.linearLayout5),
+                                        childAtPosition(
+                                                IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class),
+                                                2)),
                                 0),
                         isDisplayed()));
-        appCompatButton.perform(click());
+        expandableListView.check(matches(isDisplayed()));
+
+        ViewInteraction appCompatSpinner2 = onView(
+                allOf(withId(R.id.spinner),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                1),
+                        isDisplayed()));
+        appCompatSpinner2.perform(click());
+
+        DataInteraction appCompatCheckedTextView2 = onData(anything())
+                .inAdapterView(allOf(withClassName(is("com.android.internal.app.AlertController$RecycleListView")),
+                        childAtPosition(
+                                withClassName(is("android.widget.FrameLayout")),
+                                0)))
+                .atPosition(1);
+        appCompatCheckedTextView2.perform(click());
+
+        ViewInteraction expandableListView2 = onView(
+                allOf(withId(R.id.exp),
+                        childAtPosition(
+                                allOf(withId(R.id.linearLayout5),
+                                        childAtPosition(
+                                                IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class),
+                                                2)),
+                                0),
+                        isDisplayed()));
+        expandableListView2.check(matches(isDisplayed()));
 
         ViewInteraction appCompatImageButton = onView(
                 allOf(withContentDescription("Navigate up"),
@@ -82,6 +129,9 @@ public class DashboardTest {
                                 1),
                         isDisplayed()));
         appCompatImageButton.perform(click());
+
+        ViewInteraction linearLayout2 = onView(withId(R.id.linearLayout6));
+        linearLayout2.perform(click());
 
     }
 
