@@ -17,6 +17,7 @@
     <string name="title_activity_courses">CoursesActivity</string>
     <string name="Add">Add</string>
     <string name="Drop">Drop</string>
+    <string name="action_settings">Settings</string>
     <string-array name="term">
         <item>-- All --</item>
         <item>Fall</item>
