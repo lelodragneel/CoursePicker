@@ -44,8 +44,6 @@ public class Dashboard extends AppCompatActivity {
 
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     v.setActivated(false);
-                    Intent intent = new Intent(v.getContext(), Schedule.class);
-                    startActivity(intent);
                     return true;
                 }
                 return false;
