@@ -11,3 +11,8 @@ components:
 
     # The SDK version used to compile your project
     - android-26
+
+# Needed because gradlew is 644 by default
+before_install:
+ - chmod +x gradlew
+
