@@ -24,12 +24,12 @@ public class Schedule extends AppCompatActivity {
 
     DatabaseReference db_root;
     List<String> listDataHeader;
-    HashMap<String, Course> listDataChild;
-    ExpandableListAdapter listAdapter;
+    HashMap<String, Class> listDataChild;
+    ClassListAdapter listAdapter;
     ExpandableListView expListView;
     Spinner ddTerm;
-    ArrayList<Course> fallCourses;
-    ArrayList<Course> winterCourses;
+    ArrayList<Class> fallCourses;
+    //ArrayList<Course> winterCourses;
 
     private String term;
     private String username;
@@ -37,7 +37,7 @@ public class Schedule extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_courses);
+        setContentView(R.layout.activity_schedule);
         Toolbar toolbar = findViewById(R.id.my_toolbar);
 
         setSupportActionBar(toolbar);
@@ -73,106 +73,69 @@ public class Schedule extends AppCompatActivity {
         db_root = FirebaseDatabase.getInstance().getReference();
 
         // asynchronous listener to retrieve fall term data
-        //DatabaseReference db_fall = db_root.child("Courses").child(username).child("Courses").child(term);
-        DatabaseReference db_fall = db_root.child("Fall Term ");
+//        DatabaseReference db_fall = db_root.child("Courses").child(username).child("Courses").child(term);
+//        //DatabaseReference db_fall = db_root.child("Fall Term ");
+//        db_fall.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//                // clear previous data
+//                fallCourses = new ArrayList<>();
+//
+//                // loop through every fall course in db
+//                for (DataSnapshot pSnapShot : dataSnapshot.getChildren()) {
+//
+//                    //TODO:Extract different details for relevant courses and times
+//                    // extract course details
+//                    String name = pSnapShot.getKey();
+//                    String classDays = pSnapShot.child("Class Days").getValue(String.class);
+//                    String description = pSnapShot.child("Description").getValue(String.class);
+//                    String classTime = pSnapShot.child("Class Time").getValue(String.class);
+//
+//                    // assign course details
+//                    //fallCourses.add(new Course(classDays, classTime, description,
+//                    //        name, prerequisites, seatsAvail));
+//
+//
+//                    //TODO: Add something here for conflict resolution
+//
+//                    // refresh accordion
+//                    refreshAccordion();
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {}
+//        });
+
+        DatabaseReference db_fall = db_root.child("Users").child("jg123456"/*username*/).child("Courses").child("Fall"/*term*/);
         db_fall.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
-                // clear previous data
+                //clear previous data
                 fallCourses = new ArrayList<>();
+                //loop through every fall course in db
 
-                // loop through every fall course in db
-                for (DataSnapshot pSnapShot : dataSnapshot.getChildren()) {
-
-                    //TODO:Extract different details for relevant courses and times
-                    // extract course details
+                //TODO:Actually wire this into firebase
+                /*for (DataSnapshot pSnapShot : dataSnapshot.getChildren()) {
                     String name = pSnapShot.getKey();
                     String classDays = pSnapShot.child("Class Days").getValue(String.class);
-                    String description = pSnapShot.child("Description").getValue(String.class);
                     String classTime = pSnapShot.child("Class Time").getValue(String.class);
-                    String prerequisites = pSnapShot.child("Prerequisites").getValue(String.class);
-                    int seatsAvail = pSnapShot.child("Seats Available").getValue(int.class);
+                }*/
 
-                    // assign course details
-                    fallCourses.add(new Course(classDays, classTime, description,
-                            name, prerequisites, seatsAvail));
-
-
-                    //TODO: Add something here for conflict resolution
-
-                    // refresh accordion
-                    refreshAccordion();
-                }
+                //TODO:Sort array list to display class in proper order
+                fallCourses.add(new Class("Fine Wine", "R", "0200-0500" ));
+                fallCourses.add(new Class("Fine Wine", "R", "0200-0500" ));
+                fallCourses.add(new Class("Fine Wine", "R", "0200-0500" ));
+                fallCourses.add(new Class("Fine Wine", "R", "0200-0500" ));
+                //TODO:highlight conflicts
             }
-
-            @Override
+        @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
 
-        // asynchronous listener to retrieve winter term data
-        DatabaseReference db_winter = db_root.child("Winter Term");
-        db_winter.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                // clear previous data
-                winterCourses = new ArrayList<>();
-
-                // loop through every winter course in db
-                for (DataSnapshot pSnapShot : dataSnapshot.getChildren()) {
-
-                    //TODO:Extract different details for relevant courses and times
-                    // extract course details
-                    String name = pSnapShot.getKey();
-                    String classDays = pSnapShot.child("Class Days").getValue(String.class);
-                    String description = pSnapShot.child("Description").getValue(String.class);
-                    String classTime = pSnapShot.child("Class Time").getValue(String.class);
-                    String prerequisites = pSnapShot.child("Prerequisites").getValue(String.class);
-                    int seatsAvail = pSnapShot.child("Seats Available").getValue(int.class);
-
-                    // assign course details
-                    winterCourses.add(new Course(classDays, classTime, description,
-                            name, prerequisites, seatsAvail));
-
-                    // refresh accordion
-                    refreshAccordion();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        });
 
     }
-
-    /*
-     * Function called by the "Add" buttons under accordion
-     * This will decrement the seat-count and add the user id to the course clicked
-     * Note: view.getTag() will return the course name clicked from accordion
-     */
-    public void addCourse(View view) {
-
-        String selected = ddTerm.getSelectedItem().toString();
-
-        switch (selected) {
-            case "Fall":
-                // TODO decrement seats available
-                // TODO add user id to specified course in firebase
-//                db_root.child("Fall Term ").child(view.getTag().toString())
-//                        .child("Seats Available").setValue(1);
-                break;
-            case "Winter":
-                // TODO decrement seats available
-                // TODO add user id to specified course in firebase
-//                db_root.child("Winter Term").child(view.getTag().toString())
-//                        .child("Seats Available").setValue(1);
-                break;
-        }
-
-        refreshAccordion();
-    }
-
     /*
      * Checks to see which term is selected in the spinner, then returns a database reference
      * pointing to the correct sub-database
@@ -186,29 +149,17 @@ public class Schedule extends AppCompatActivity {
         listDataHeader = new ArrayList<>();
         listDataChild = new HashMap<>();
 
-        switch (selected) {
-            case "Fall":
-                if (fallCourses != null) {
-                    for (Course i : fallCourses) {
-                        listDataHeader.add(i.getName());
-                        listDataChild.put(i.getName(), i);
-                    }
-                }
-                break;
-            case "Winter":
-                if (winterCourses != null) {
-                    for (Course i : winterCourses) {
-                        listDataHeader.add(i.getName());
-                        listDataChild.put(i.getName(), i);
-                    }
-                }
-                break;
-            default:
-                Log.e("refreshAccordion","could not populate accordion");
+        if (fallCourses != null) {
+            for (Class i : fallCourses) {
+                listDataHeader.add(i.getClassName());
+                listDataChild.put(i.getClassName(), i);
+            }
+        } else {
+            Log.e("refreshAccordion", "could not populate accordion");
         }
 
         // recreate adapter with new data
-        listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
+        listAdapter = new ClassListAdapter(this, listDataHeader, listDataChild);
 
         // setting list adapter
         expListView.setAdapter(listAdapter);

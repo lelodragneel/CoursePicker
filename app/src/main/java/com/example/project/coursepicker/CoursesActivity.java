@@ -25,7 +25,7 @@ public class CoursesActivity extends AppCompatActivity {
     DatabaseReference db_root;
     List<String> listDataHeader;
     HashMap<String, Course> listDataChild;
-    ExpandableListAdapter listAdapter;
+    CoursesListAdapter listAdapter;
     ExpandableListView expListView;
     Spinner ddTerm;
     ArrayList<Course> fallCourses;
@@ -199,7 +199,7 @@ public class CoursesActivity extends AppCompatActivity {
         }
 
         // recreate adapter with new data
-        listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
+        listAdapter = new CoursesListAdapter(this, listDataHeader, listDataChild);
 
         // setting list adapter
         expListView.setAdapter(listAdapter);
