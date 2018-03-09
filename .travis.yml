@@ -1,23 +1,9 @@
 language: android
-jdk: oraclejdk8
+jdk:
+  - oraclejdk8
 android:
   components:
-    # Latest revision of SDK Tools
     - tools
-
-    # The BuildTools version used
     - build-tools-26.0.2
-
-    # The SDK version used to compile your project
+    - platform-tools
     - android-26
-
-  licenses:
-      - 'android-sdk-preview-license-.+'
-      - 'android-sdk-license-.+'
-      - 'google-gdk-license-.+'
-      - 'intel-android-extra-license.+'
-      - '.+'
-
-# Needed because gradlew is 644 by default
-before_install:
- - chmod +x gradlew
