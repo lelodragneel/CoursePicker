@@ -1,4 +1,4 @@
-# CoursePicker
+# CoursePicker [![CircleCI](https://circleci.com/gh/lelodragneel/CoursePicker.svg?style=svg)](https://circleci.com/gh/lelodragneel/CoursePicker)
 
 A course-scheduling application to make life easier next time you choose a course.
 
