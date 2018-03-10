@@ -6,6 +6,7 @@ A course-scheduling application to make life easier next time you choose a cours
 
 * [Android Studio](https://developer.android.com/studio/index.html) - The IDE used
 * [Firebase](https://firebase.google.com/) - For database management
+* [CircleCI](https://circleci.com/gh/lelodragneel/CoursePicker) - Our Continuous Integration system
 
 ## Docs
 
