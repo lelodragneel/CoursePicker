@@ -18,14 +18,15 @@ import com.google.firebase.database.ValueEventListener;
 
 public class userProfile extends AppCompatActivity {
 
-    DatabaseReference db_root, database_1, database_2, database_3;
+    DatabaseReference db_root, database_u_id, database_u_name, database_u_email;
     private TextView user_ID;
     private TextView user_nameView;
     private TextView user_ChangePW;
     private EditText user_Email;
     private EditText user_Phone;
     private Button user_Update;
-    private Session session1;   //-------------------------------is this correct way to call session ???
+    private Session session1;   //-------------------------is this correct way to call session ???
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,9 @@ public class userProfile extends AppCompatActivity {
         setContentView(R.layout.user_profile);
 
         db_root = FirebaseDatabase.getInstance().getReference();
-        database_1 = db_root.child("Users").child(session1.getID());
+        database_u_id = db_root.child("Users").child(session1.getID());    //------------------need reference to session user
+        database_u_name = db_root.child("Users").child(session1.getID());
+        database_u_email = db_root.child("Users").child(session1.getID());
 
         user_ID = (TextView) findViewById(R.id.userID);
         user_nameView = (TextView) findViewById(R.id.userNameViewer);
@@ -43,19 +46,16 @@ public class userProfile extends AppCompatActivity {
         user_Update = (Button) findViewById(R.id.updateProfileBtn);
 
 
-        database_1.addValueEventListener(new ValueEventListener() {
-
+        database_u_id.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot_1) {
                 String u_id = dataSnapshot_1.getValue().toString();
-                user_ID.setText(u_id);        //gets userID <------ need to add reference to "session user"
+                user_ID.setText(u_id);
 
-                database_2 = db_root.child("Users").child(session1.getID()).child("Name");
+                database_u_name = db_root.child("Users").child(session1.getID()).child("Name");  //--------------need reference to session user
                 user_nameView = (TextView) findViewById(R.id.userNameViewer);
 
-
-                database_2.addValueEventListener(new ValueEventListener() {
-
+                database_u_name.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot_2) {
                         String u_name = dataSnapshot_2.getValue().toString();   //gets userName <------ need to add reference to "session user"
