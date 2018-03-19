@@ -5,7 +5,7 @@ android {
     buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.example.project.coursepicker"
-        minSdkVersion 23
+        minSdkVersion 18
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"

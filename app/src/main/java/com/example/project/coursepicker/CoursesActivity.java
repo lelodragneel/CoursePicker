@@ -1,14 +1,19 @@
 package com.example.project.coursepicker;
 
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,10 +36,20 @@ public class CoursesActivity extends AppCompatActivity {
     ArrayList<Course> fallCourses;
     ArrayList<Course> winterCourses;
 
+    Button addButton;
+
+    String uid = "Ab123456";
+
+    AlertDialog.Builder alertBuilder;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_courses);
+
+        //add button instance
+        addButton = findViewById(R.id.btn_add);
+
         Toolbar toolbar = findViewById(R.id.my_toolbar);
 
         setSupportActionBar(toolbar);
@@ -49,7 +64,7 @@ public class CoursesActivity extends AppCompatActivity {
 
         // set spinner adapter
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, new String[] {"Fall", "Winter"});
+                android.R.layout.simple_spinner_item, new String[]{"Fall", "Winter"});
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ddTerm.setAdapter(adapter);
 
@@ -63,7 +78,8 @@ public class CoursesActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
         // declare database root
@@ -71,7 +87,7 @@ public class CoursesActivity extends AppCompatActivity {
 
         // asynchronous listener to retrieve fall term data
         DatabaseReference db_fall = db_root.child("Fall Term "); // I lost half my brain cells due
-                                                                 // to this extra space in the name
+        // to this extra space in the name
         db_fall.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -100,7 +116,8 @@ public class CoursesActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onCancelled(DatabaseError databaseError) {
+            }
         });
 
         // asynchronous listener to retrieve winter term data
@@ -133,9 +150,9 @@ public class CoursesActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onCancelled(DatabaseError databaseError) {
+            }
         });
-
     }
 
     /*
@@ -146,6 +163,7 @@ public class CoursesActivity extends AppCompatActivity {
     public void addCourse(View view) {
 
         String selected = ddTerm.getSelectedItem().toString();
+        final String course = view.getTag().toString();
 
         switch (selected) {
             case "Fall":
@@ -153,16 +171,79 @@ public class CoursesActivity extends AppCompatActivity {
                 // TODO add user id to specified course in firebase
 //                db_root.child("Fall Term ").child(view.getTag().toString())
 //                        .child("Seats Available").setValue(1);
-                break;
+
+                db_root.child("Users").child(uid).child("Courses").child("Fall").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot data) {
+                         if (!data.hasChild(course)) {
+                                db_root.child("Users").child(uid).child("Courses").child("Fall").child(course).setValue(true);
+                                Toast.makeText(getApplicationContext(), "Successfully Enrolled in " + course, Toast.LENGTH_LONG).show();
+                          }
+                          else
+                         {
+                             displayAlert(course, "Fall");
+                         }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+        break;
             case "Winter":
                 // TODO decrement seats available
                 // TODO add user id to specified course in firebase
 //                db_root.child("Winter Term").child(view.getTag().toString())
 //                        .child("Seats Available").setValue(1);
+
+                db_root.child("Users").child(uid).child("Courses").child("Winter").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot data) {
+                        if (!data.hasChild(course)) {
+                            db_root.child("Users").child(uid).child("Courses").child("Winter").child(course).setValue(true);
+                            Toast.makeText(getApplicationContext(), "Successfully Enrolled in " + course, Toast.LENGTH_LONG).show();
+                        }
+                        else
+                        {
+                            displayAlert(course, "Winter");
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
                 break;
         }
 
         refreshAccordion();
+    }
+
+
+
+    private void displayAlert(final String course, final String semester) {
+
+        alertBuilder = new AlertDialog.Builder(this);
+
+        alertBuilder.setCancelable(true);
+
+        alertBuilder.setTitle("Drop Course");
+        alertBuilder.setMessage("Are you sure you wish to drop " + course);
+        alertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                db_root.child("Users").child(uid).child("Courses").child(semester).child(course).removeValue();
+                Toast.makeText(getApplicationContext(), "Successfully Dropped " + course , Toast.LENGTH_LONG).show();
+            }
+        });
+        alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        alertBuilder.show();
     }
 
     /*

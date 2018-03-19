@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private boolean testMode = true;
 
-    private Session session;
+  //  private Session session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,12 +57,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         setContentView(R.layout.activity_login);
 
         //create a new session to store session variables
-        session = new Session(this);
+   //     session = ((Session)this.getApplication());
 
         // Set up the login form.
         usernameView = findViewById(R.id.textView_email);
 
         passwordView = findViewById(R.id.textView_password);
+
+ //       session.ID(usernameView.getText().toString());
 
         Button emailSignInButton = findViewById(R.id.btn_signIn);
         emailSignInButton.setOnClickListener(new OnClickListener() {
@@ -79,6 +81,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         loginFormView = findViewById(R.id.login_form);
         progressView = findViewById(R.id.login_progress);
+
+
     }
 
     /**
@@ -130,7 +134,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(true);
             //TODO: Program username and password checks here, delete unused methods
             //set loginID for session
-            session.ID(usernameView.getText().toString());
+
 
             startDashboard();
             /*authTask = new UserLoginTask(email, password);
