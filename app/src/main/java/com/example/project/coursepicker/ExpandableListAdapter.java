@@ -22,7 +22,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private HashMap<String, Course> _listDataChild;
 
     protected ExpandableListAdapter(Context context, List<String> listDataHeader,
-                                 HashMap<String, Course> listChildData) {
+                                    HashMap<String, Course> listChildData) {
         this._context = context;
         this._listDataHeader = listDataHeader;
         this._listDataChild = listChildData;
@@ -39,8 +39,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getChildView(int groupPosition, final int childPosition,
-                             boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(int groupPosition, final int childPosition, boolean isLastChild,
+                             View convertView, ViewGroup parent) {
 
         final Course childText = (Course) getChild(groupPosition, childPosition);
 
@@ -92,19 +92,25 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded,
-                             View convertView, ViewGroup parent) {
+    public View getGroupView(int groupPosition, boolean isExpanded, View convertView,
+                             ViewGroup parent) {
+
         String headerTitle = (String) getGroup(groupPosition);
+
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.course_list, null);
         }
 
-        TextView lblListHeader = convertView
-                .findViewById(R.id.lblListHeader);
+        TextView lblListHeader = convertView.findViewById(R.id.lblListHeader);
         lblListHeader.setTypeface(null, Typeface.BOLD);
         lblListHeader.setText(headerTitle);
+
+//        if (coursesRegistered.contains(headerTitle)) {
+//            convertView.setBackgroundColor(_context.getApplicationContext().getResources()
+//                    .getColor(R.color.lightGreen));
+//        }
 
         return convertView;
     }
