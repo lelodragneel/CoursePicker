@@ -24,7 +24,7 @@ public class changePassword extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_profile);
+        setContentView(R.layout.change_password);
 
         db_root = FirebaseDatabase.getInstance().getReference();
         database_u_id = db_root.child("Users").child("Ab123456");
