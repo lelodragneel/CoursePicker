@@ -3,6 +3,7 @@ package com.example.project.coursepicker;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.app.Application;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  *  of user that's logged in.
  */
 
-public class Session {
+public class Session extends Application {
 
     private SharedPreferences session;
     private SharedPreferences.Editor edit;
@@ -22,6 +23,9 @@ public class Session {
         session = PreferenceManager.getDefaultSharedPreferences(context);
         edit = session.edit();
     }
+
+    public Session()
+    {}
 
     public void ID(String loginID)
     {

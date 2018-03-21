@@ -15,6 +15,7 @@ import java.util.HashMap;
 public class User implements Serializable {
 
     public String Password;
+    public Course Courses;
 
     public User() {}
 
@@ -22,10 +23,14 @@ public class User implements Serializable {
         this.Password = Password;
     }
 
+    public User(Course course) {
+        this.Courses = course;
+    }
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("Password", Password);
+        result.put("Courses", Courses);
 
         return result;
     }

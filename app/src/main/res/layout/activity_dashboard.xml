@@ -84,7 +84,7 @@
             android:layout_weight="1"
             android:fontFamily="sans-serif-smallcaps"
             android:gravity="center|bottom"
-            android:text="CALENDAR"
+            android:text="SCHEDULE"
             android:textAlignment="center"
             android:textColor="@color/darkText"
             android:textStyle="bold" />
