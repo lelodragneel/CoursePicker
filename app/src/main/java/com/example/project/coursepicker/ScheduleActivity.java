@@ -39,11 +39,7 @@ public class ScheduleActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.my_toolbar);
 
         setSupportActionBar(toolbar);
-        //getSupportActionBar().setTitle("ScheduleActivity");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //getSupportActionBar().setHomeButtonEnabled(true);
-        //getSupportActionBar().setDisplayShowHomeEnabled(true);
-
         //Set-up Firebase
         firebaseDBInstance = FirebaseDatabase.getInstance();
         firebaseReference = firebaseDBInstance.getReference("Course");
@@ -53,11 +49,13 @@ public class ScheduleActivity extends AppCompatActivity {
 
         //Set up the List View
         firebaseAdapter = new FirebaseListAdapter<Course>(this, Course.class,
-                android.R.layout.simple_list_item_1, firebaseReference) {
+                android.R.layout.simple_list_item_1, firebaseReference.orderByChild("name")) {
+
+            //TODO: sort properly by day and time
+
             @Override
             protected void populateView(View v, Course model, int position) {
 
-                //TODO: add method to filter classes listed in each students list of classes
 
                 TextView contactName = (TextView)v.findViewById(android.R.id.text1);
                 contactName.setText(model.getName());
