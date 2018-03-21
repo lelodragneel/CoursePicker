@@ -22,7 +22,7 @@ import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class Schedule extends AppCompatActivity {
+public class ScheduleActivity extends AppCompatActivity {
 
 
     private ListView contactListView;
@@ -39,9 +39,9 @@ public class Schedule extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.my_toolbar);
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Schedule");
-        getSupportActionBar().
+        //getSupportActionBar().setTitle("ScheduleActivity");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setHomeButtonEnabled(true);
         //getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         //Set-up Firebase
