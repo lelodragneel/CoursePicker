@@ -1,5 +1,8 @@
 package com.example.project.coursepicker;
 
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
 import java.io.Serializable;
 
 public class Course implements Serializable {

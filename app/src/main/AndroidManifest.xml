@@ -19,6 +19,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".userProfile"
+            android:label="profile"
+            android:parentActivityName=".Dashboard"></activity>
+        <activity android:name=".changePassword"
+            android:label="newPassword"
+            android:parentActivityName=".userProfile"></activity>
+
         <activity
             android:name=".CoursesActivity"
             android:label="Courses"
