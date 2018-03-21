@@ -23,6 +23,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * @author Lawrence, Brianna, Kenny, Jake
+ * Activity class for displaying and manipulating
+ * the course selection.
+ * Courses are organized by semester (fall/winter).
+ */
 public class CoursesActivity extends AppCompatActivity {
 
     private DatabaseReference db_root;
