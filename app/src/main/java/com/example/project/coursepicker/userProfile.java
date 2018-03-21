@@ -44,7 +44,6 @@ public class userProfile extends AppCompatActivity {
         user_Phone = (EditText) findViewById(R.id.userPhone);
         user_Update = (Button) findViewById(R.id.updateProfileBtn);
 
-
         user_ID.setText(database_u_id.toString());               //---retrieve current User details & set in profile
         user_nameView.setText(database_u_id.child("Name").toString());
         user_Email.setText(database_u_id.child("Email").toString());
@@ -54,7 +53,7 @@ public class userProfile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (user_ID.getText().toString().trim().length() != 0 && user_Phone.getText().toString().trim().length() != 0){
-                    updateProfileDetails(user_Email.toString(), user_Phone.toString());
+                    updateProfileDetails(user_Email.getText().toString(), user_Phone.getText().toString());
                 }
                 else {
                     Toast.makeText(getApplicationContext(),"Empty Field(s)", Toast.LENGTH_SHORT).show();
@@ -72,8 +71,9 @@ public class userProfile extends AppCompatActivity {
 
     }
 
-
     private void updateProfileDetails(String email, String phone){
+        //db_root = FirebaseDatabase.getInstance().getReference();
+        //database_u_id = db_root.child("Users").child("Ab123456");
         database_u_id.child("Email").setValue(email);
         database_u_id.child("Phone").setValue(phone);
         Toast.makeText(this,"Update Successful", Toast.LENGTH_SHORT).show();

@@ -37,8 +37,8 @@ public class changePassword extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (user_newPW.getText().toString().trim().length() != 0 && user_retypePW.getText().toString().trim().length() != 0){
-                    if (user_newPW.equals(user_retypePW)){
-                        updatePassword(user_newPW.toString());
+                    if (user_newPW.getText().toString().equals(user_retypePW.getText().toString())){
+                        updatePassword(user_newPW.getText().toString());
                     }
                     else {
                         Toast.makeText(getApplicationContext(),"Passwords Don't Match", Toast.LENGTH_SHORT).show();
