@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 public class ScheduleActivity extends AppCompatActivity {
 
@@ -44,21 +45,22 @@ public class ScheduleActivity extends AppCompatActivity {
         firebaseDBInstance = FirebaseDatabase.getInstance();
         firebaseReference = firebaseDBInstance.getReference("Course");
 
+        Query query = firebaseReference.orderByChild("order");
+                //equalTo(user.getID);
+
         //Get the reference to the UI contents
         contactListView = (ListView) findViewById(R.id.listView);
 
         //Set up the List View
         firebaseAdapter = new FirebaseListAdapter<Course>(this, Course.class,
-                android.R.layout.simple_list_item_1, firebaseReference.orderByChild("name")) {
+                android.R.layout.simple_list_item_1, query) {
 
             //TODO: sort properly by day and time
 
             @Override
             protected void populateView(View v, Course model, int position) {
-
-
                 TextView contactName = (TextView)v.findViewById(android.R.id.text1);
-                contactName.setText(model.getName());
+                contactName.setText(model.getClassDays() + " - " + model.getClassTime() + " - " + model.getName());
             }
 
             //@Override

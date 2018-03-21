@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context="com.example.project.coursepicker.ScheduleActivity">
-
-<android.support.v7.widget.Toolbar
-    android:id="@+id/my_toolbar"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?attr/colorPrimary"
-    android:elevation="4dp"
-    android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+    android:layout_height="match_parent"
+    tools:context="com.example.project.coursepicker.ScheduleActivity">
 
-<!--<Button
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <!--<Button
     android:id="@+id/submitButton"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -31,12 +31,16 @@ tools:context="com.example.project.coursepicker.ScheduleActivity">
     android:layout_marginStart="8dp"
     android:layout_marginEnd="8dp" />-->
 
-<ListView
-    android:id="@+id/listView"
-    android:layout_width="359dp"
-    android:layout_height="wrap_content"
-    android:layout_marginRight="12dp"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/submitButton" />
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="359dp"
+        android:layout_height="503dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
 
 </android.support.constraint.ConstraintLayout>
