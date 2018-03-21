@@ -56,6 +56,9 @@ public class userProfile extends AppCompatActivity {
                 if (user_ID.getText().toString().trim().length() != 0 && user_Phone.getText().toString().trim().length() != 0){
                     updateProfileDetails(user_Email.toString(), user_Phone.toString());
                 }
+                else {
+                    Toast.makeText(getApplicationContext(),"Empty Field(s)", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
