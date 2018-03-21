@@ -49,8 +49,11 @@ public class userProfile extends AppCompatActivity {
         user_ID.setText("Ab123456");    //temp value
         user_nameView.setText("Juliano Franz"); //temp value
 
-        user_Email.setText(database_u_id.child("Email").toString());
-        user_Phone.setText(database_u_id.child("Phone").toString());
+        //user_Email.setText(database_u_id.child("Email").toString());  //need to fix value coming from firebase
+        //user_Phone.setText(database_u_id.child("Phone").toString());  //need to fix value coming from firebase
+        user_Email.setText("Ab123456@dal.ca");  //temp value
+        user_Phone.setText("9021234567");   //temp value
+
 
         user_Update.setOnClickListener(new View.OnClickListener(){
             @Override
