@@ -35,7 +35,7 @@ public class userProfile extends AppCompatActivity {
         setContentView(R.layout.user_profile);
 
         db_root = FirebaseDatabase.getInstance().getReference();
-        database_u_id = db_root.child("Users").child("Ab123456");    //------------------need reference to session user
+        database_u_id = db_root.child("Users").child("Ab123456");    //-----need reference to session class??
 
         user_ID = (TextView) findViewById(R.id.userID);
         user_nameView = (TextView) findViewById(R.id.userNameViewer);
@@ -44,8 +44,11 @@ public class userProfile extends AppCompatActivity {
         user_Phone = (EditText) findViewById(R.id.userPhone);
         user_Update = (Button) findViewById(R.id.updateProfileBtn);
 
-        user_ID.setText(database_u_id.toString());               //---retrieve current User details & set in profile
-        user_nameView.setText(database_u_id.child("Name").toString());
+        //user_ID.setText(database_u_id.toString());               //need to fix value coming from firebase
+        //user_nameView.setText(database_u_id.child("Name").toString());    //need to fix value coming from firebase
+        user_ID.setText("Ab123456");    //temp value
+        user_nameView.setText("Juliano Franz"); //temp value
+
         user_Email.setText(database_u_id.child("Email").toString());
         user_Phone.setText(database_u_id.child("Phone").toString());
 
@@ -72,8 +75,6 @@ public class userProfile extends AppCompatActivity {
     }
 
     private void updateProfileDetails(String email, String phone){
-        //db_root = FirebaseDatabase.getInstance().getReference();
-        //database_u_id = db_root.child("Users").child("Ab123456");
         database_u_id.child("Email").setValue(email);
         database_u_id.child("Phone").setValue(phone);
         Toast.makeText(this,"Update Successful", Toast.LENGTH_SHORT).show();
