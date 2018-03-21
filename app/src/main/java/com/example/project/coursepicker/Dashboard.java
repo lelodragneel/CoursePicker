@@ -32,7 +32,7 @@ public class Dashboard extends AppCompatActivity {
             }
         });
 
-        // Calendar touch listener
+        // Schedule touch listener
         LinearLayout l2 = findViewById(R.id.linearLayout2);
         l2.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -44,6 +44,8 @@ public class Dashboard extends AppCompatActivity {
 
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     v.setActivated(false);
+                    Intent intent = new Intent(v.getContext(), Schedule.class);
+                    startActivity(intent);
                     return true;
                 }
                 return false;
@@ -70,7 +72,7 @@ public class Dashboard extends AppCompatActivity {
             }
         });
 
-        // Options touch listener
+        // Settings touch listener
         LinearLayout l4 = findViewById(R.id.linearLayout4);
         l4.setOnTouchListener(new View.OnTouchListener() {
             @Override

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class Course implements Serializable {
 
+    private String num;
     private String classDays;
     private String classTime;
     private String description;
@@ -11,8 +12,12 @@ public class Course implements Serializable {
     private String prerequisites;
     private int seatsAvail;
 
+    protected Course(){
+
+    }
+
     protected Course(String classDays, String classTime, String description, String name,
-                  String prerequisites, int seatsAvail){
+                     String prerequisites, int seatsAvail){
         this.classDays = classDays;
         this.classTime = classTime;
         this.description = description;
@@ -20,6 +25,19 @@ public class Course implements Serializable {
         this.prerequisites = prerequisites;
         this.seatsAvail = seatsAvail;
     }
+
+    //constructor not using the num requirment
+    protected Course(String num, String classDays, String classTime, String description, String name,
+                  String prerequisites, int seatsAvail){
+        this.classDays = classDays;
+        this.classTime = classTime;
+        this.description = description;
+        this.name = name;
+        this.prerequisites = prerequisites;
+        this.seatsAvail = seatsAvail;
+        this.num = num;
+    }
+
 
     public String getClassDays() {
         return classDays;
