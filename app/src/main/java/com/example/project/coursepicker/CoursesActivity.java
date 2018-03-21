@@ -145,13 +145,12 @@ public class CoursesActivity extends AppCompatActivity {
         });
     }
 
-    /*
-     * Function called by the "Add" buttons under accordion
-     * This will decrement the seat-count and add the user id to the course clicked
-     * Note: view.getTag() will return the course name clicked from accordion
-     */
+    /**
+    * addCourse method used to add and drop a course
+    * from a user's current schedule
+    * @param view The view where the add/drop button was clicked
+    */
     public void addCourse(View view) {
-
         String selected = ddTerm.getSelectedItem().toString();
         final String course = view.getTag().toString();
 
@@ -229,14 +228,22 @@ public class CoursesActivity extends AppCompatActivity {
         refreshAccordion();
     }
 
+    /**
+     * displayAlert method is called when the user clicks the drop button
+     * on a course they're already enrolled in. This method will display a
+     * pop-up allowing the option of dropping the course, or cancelling the drop request.
+     * @param course    the course the user is attempting to drop
+     * @param semester  the semester in which the course is held (Fall or Winter)
+     */
     private void displayAlert(final String course, final String semester) {
 
+        //create new alert dialog windows
         alertBuilder = new AlertDialog.Builder(this);
-
-        alertBuilder.setCancelable(true);
+        alertBuilder.setCancelable(true);   //allow it to be cancelled
 
         alertBuilder.setTitle("Drop Course");
         alertBuilder.setMessage("Are you sure you wish to drop " + course);
+
         alertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -256,8 +263,8 @@ public class CoursesActivity extends AppCompatActivity {
         alertBuilder.show();
     }
 
-    /*
-     * Checks to see which term is selected in the spinner, then returns a database reference
+    /**
+     * Method to check to see which term is selected in the spinner, then returns a database reference
      * pointing to the correct sub-database
      */
     private void refreshAccordion() {

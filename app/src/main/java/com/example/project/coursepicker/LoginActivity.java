@@ -140,9 +140,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             /*authTask = new UserLoginTask(email, password);
             authTask.execute((Void) null);*/
         }
-
     }
 
+    /**
+     * startDashboard method used to start the dashboard activity
+     */
     private void startDashboard() {
         Intent intent = new Intent(this, Dashboard.class);
         startActivity(intent);
