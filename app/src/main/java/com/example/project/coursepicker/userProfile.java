@@ -67,6 +67,7 @@ public class userProfile extends AppCompatActivity {
             public void onClick(View view) {
                 startChangePassword();
             }
+
         });
 
     }
