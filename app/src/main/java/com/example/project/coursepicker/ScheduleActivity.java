@@ -46,7 +46,6 @@ public class ScheduleActivity extends AppCompatActivity {
         firebaseReference = firebaseDBInstance.getReference("Course");
 
         Query query = firebaseReference.orderByChild("order");
-                //equalTo(user.getID);
 
         //Get the reference to the UI contents
         contactListView = (ListView) findViewById(R.id.listView);
