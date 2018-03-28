@@ -15,19 +15,13 @@ public void setPassWord(String x){
 //-----------------------------PASSWORD------------------------------------------------
 
 public boolean match(String x){			//check if password is direct match
-        if (!x.equals(passWord)){
-        return false;
-        }
-        return true;
-        }
+    return x.equals(passWord);
+}
 
 
 public boolean okLength(String x) {		//check length of password
-        if (x.length() < 8) {
-        return false;
-        }
-        return true;
-        }
+    return x.length() >= 8;
+}
 
 public boolean specChar(String x){		//check for at least 1 special character
         for (int i=0; i < x.length(); i++){
@@ -70,12 +64,9 @@ public boolean caseCheck(String x){		//check for at least 1 upper case and 1 low
 //-----------------------------USER NAME CASES------------------------
 
 public boolean userLength(String x){		//user name length must be 8 characters
-        if (x.length() == 8){
-        return true;
-        }
-        return false;
+    return x.length() == 8;
 
-        }
+}
 
 public boolean letterCheck(String x){		//user names first two characters must be letters
         Boolean condition1 = false;
@@ -89,11 +80,8 @@ public boolean letterCheck(String x){		//user names first two characters must be
         if ((ascii >= 65 && ascii <= 90) || ascii >= 97 && ascii <= 122){
         condition2 = true;
         }
-        if (condition1 == true && condition2 == true){
-        return true;
-        }
-        return false;
-        }
+    return condition1 == true && condition2 == true;
+}
 
 public boolean unNumCheck(String x){		//user names last six characters must be numbers
         for (int i = x.length()-6; i < x.length(); i++){

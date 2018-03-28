@@ -37,12 +37,12 @@ public class userProfile extends AppCompatActivity {
         db_root = FirebaseDatabase.getInstance().getReference();
         database_u_id = db_root.child("Users").child("Ab123456");    //-----need reference to session class??
 
-        user_ID = (TextView) findViewById(R.id.userID);
-        user_nameView = (TextView) findViewById(R.id.userNameViewer);
-        user_ChangePW = (TextView) findViewById(R.id.changePWBtn);
-        user_Email = (EditText) findViewById(R.id.userEmail);
-        user_Phone = (EditText) findViewById(R.id.userPhone);
-        user_Update = (Button) findViewById(R.id.updateProfileBtn);
+        user_ID = findViewById(R.id.userID);
+        user_nameView = findViewById(R.id.userNameViewer);
+        user_ChangePW = findViewById(R.id.changePWBtn);
+        user_Email = findViewById(R.id.userEmail);
+        user_Phone = findViewById(R.id.userPhone);
+        user_Update = findViewById(R.id.updateProfileBtn);
 
         //user_ID.setText(database_u_id.toString());               //need to fix value coming from firebase
         //user_nameView.setText(database_u_id.child("Name").toString());    //need to fix value coming from firebase

@@ -21,6 +21,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.project.coursepicker.lib.FireHelper;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +57,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        FireHelper fh = FireHelper.getInstance();
 
         //create a new session to store session variables
    //     session = ((Session)this.getApplication());
