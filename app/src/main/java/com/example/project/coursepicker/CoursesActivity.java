@@ -152,10 +152,11 @@ public class CoursesActivity extends AppCompatActivity {
     }
 
     /**
-    * addCourse method used to add and drop a course
-    * from a user's current schedule
-    * @param view The view where the add/drop button was clicked
-    */
+     * addCourse method used to add and drop a course
+     * from a user's current schedule
+     *
+     * @param view The view where the add/drop button was clicked
+     */
     public void addCourse(View view) {
         String selected = ddTerm.getSelectedItem().toString();
         final String course = view.getTag().toString();
@@ -164,50 +165,111 @@ public class CoursesActivity extends AppCompatActivity {
             case "Fall":
                 db_root.child("Users").child(uid).child("Courses").child("Fall")
                         .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot data) {
-                         if (!data.hasChild(course)) {
-                             db_root.child("Users").child(uid).child("Courses").child("Fall")
-                                     .child(course).setValue(true);
-                             Toast.makeText(getApplicationContext(), "Successfully " +
-                                     "Enrolled in " + course, Toast.LENGTH_LONG).show();
-                             seatCounterAddition(db_root.child("Fall Term ").child(course), -1);
-                          }
-                          else {
-                             displayAlert(course, "Fall Term ");
-                         }
-                    }
+                            @Override
+                            public void onDataChange(DataSnapshot data) {
+                                if (!data.hasChild(course)) {
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
-            break;
+                                    seatCounterAddition(db_root.child("Fall Term ").child(course), -1, course, "Fall");
+                                } else {
+                                    displayAlert(course, "Fall", "Are you sure you want to drop ", "Drop Course");
+
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                            }
+                        });
+                break;
 
             case "Winter":
                 db_root.child("Users").child(uid).child("Courses").child("Winter")
                         .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot data) {
-                        if (!data.hasChild(course)) {
-                            db_root.child("Users").child(uid).child("Courses").child("Winter")
-                                    .child(course).setValue(true);
-                            Toast.makeText(getApplicationContext(), "Successfully " +
-                                    "Enrolled in " + course, Toast.LENGTH_LONG).show();
-                            seatCounterAddition(db_root.child("Winter Term").child(course), -1);
-                        }
-                        else {
-                            displayAlert(course, "Winter Term");
-                        }
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
+                            @Override
+                            public void onDataChange(DataSnapshot data) {
+                                if (!data.hasChild(course)) {
+                                    seatCounterAddition(db_root.child("Winter Term").child(course), -1, course, "Winter");
+                                }
+                                else
+                                    displayAlert(course, "Winter", "Are you sure you want to drop ", "Drop Course");
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                            }
+                        });
                 break;
         }
 
         refreshAccordion();
+    }
+
+    private void seatCounterAddition(final DatabaseReference courseSubDatabase, final int add, final String course, final String semester) {
+        courseSubDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int counter = dataSnapshot.child("Seats Available").getValue(Integer.class);
+                if (counter > 0) {
+                    db_root.child("Users").child(uid).child("Courses").child("Winter")
+                            .child(course).setValue(true);
+                    Toast.makeText(getApplicationContext(), "Successfully " +
+                            "Enrolled in " + course, Toast.LENGTH_LONG).show();
+
+                    counter += add;
+                    courseSubDatabase.child("Seats Available").setValue(counter);
+                }
+                else displayAlert(course, semester, "No seats available. Request override for ", "Course Full");
+
+
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+
+    /**
+     * displayAlert method is called when the user clicks the drop button
+     * on a course they're already enrolled in. This method will display a
+     * pop-up allowing the option of dropping the course, or cancelling the drop request.
+     * @param course    the course the user is attempting to drop
+     * @param semester  the semester in which the course is held (Fall or Winter)
+     */
+    private void displayAlert(final String course, final String semester, final String message, final String title) {
+
+        //create new alert dialog windows
+        alertBuilder = new AlertDialog.Builder(this);
+        alertBuilder.setCancelable(true);   //allow it to be cancelled
+
+        alertBuilder.setTitle(title);
+        alertBuilder.setMessage(message + course + "?");
+
+        alertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (title.equals("Drop Course")) {
+                    db_root.child("Users").child(uid).child("Courses").child(semester).child(course).removeValue();
+                    Toast.makeText(getApplicationContext(), "Successfully Dropped " + course,
+                            Toast.LENGTH_LONG).show();
+                    seatCounterAddition(db_root.child(semester).child(course), 1, course, semester);
+                }
+                else if (title.equals("Course Full")) {
+                    db_root.child("Users").child(uid).child("Requests").child(semester).child("overrideFull").child(course).setValue(true);
+                    Toast.makeText(getApplicationContext(), "Override Requested for " + course,
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+        alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        alertBuilder.show();
     }
 
     /**
@@ -216,7 +278,7 @@ public class CoursesActivity extends AppCompatActivity {
      * @param courseSubDatabase     The database reference with the root of a course
      * @param add                   Integer to perform arithmetic with seat counter, can be negative
      */
-    private void seatCounterAddition(final DatabaseReference courseSubDatabase, final int add) {
+  /*  private void seatCounterAddition(final DatabaseReference courseSubDatabase, final int add) {
         courseSubDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -232,42 +294,8 @@ public class CoursesActivity extends AppCompatActivity {
 
         // update accordion to display new seat count
         refreshAccordion();
-    }
+    } */
 
-    /**
-     * displayAlert method is called when the user clicks the drop button
-     * on a course they're already enrolled in. This method will display a
-     * pop-up allowing the option of dropping the course, or cancelling the drop request.
-     * @param course    the course the user is attempting to drop
-     * @param semester  the semester in which the course is held (Fall or Winter)
-     */
-    private void displayAlert(final String course, final String semester) {
-
-        //create new alert dialog windows
-        alertBuilder = new AlertDialog.Builder(this);
-        alertBuilder.setCancelable(true);   //allow it to be cancelled
-
-        alertBuilder.setTitle("Drop Course");
-        alertBuilder.setMessage("Are you sure you wish to drop " + course);
-
-        alertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                db_root.child("Users").child(uid).child("Courses").child(semester).child(course)
-                        .removeValue();
-                Toast.makeText(getApplicationContext(), "Successfully Dropped " + course ,
-                        Toast.LENGTH_LONG).show();
-                seatCounterAddition(db_root.child(semester).child(course), 1);
-            }
-        });
-        alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        alertBuilder.show();
-    }
 
     /**
      * Method to check to see which term is selected in the spinner, then returns a database reference
