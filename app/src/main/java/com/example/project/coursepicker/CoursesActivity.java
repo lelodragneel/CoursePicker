@@ -265,7 +265,7 @@ public class CoursesActivity extends AppCompatActivity {
                             Toast.LENGTH_LONG).show();
                 }
                 else if (title.equals("Course Max")) {
-                    db_root.child("Users").child(uid).child("Requests").child(semester).child("courseLimit").setValue(true);
+                    db_root.child("Users").child(uid).child("Requests").child(semester).child("courseLimit").child(course).setValue(true);
                     Toast.makeText(getApplicationContext(), "Override Requested for " + course,
                             Toast.LENGTH_LONG).show();
                 }
