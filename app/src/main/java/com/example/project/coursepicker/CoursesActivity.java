@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
+import android.text.method.DigitsKeyListener;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -164,9 +166,22 @@ public class CoursesActivity extends AppCompatActivity {
      *
      * @param view The view where the add/drop button was clicked
      */
+
     public void addCourse(View view) {
+        addCourse(view.getTag().toString());
+    }
+
+    /**
+     * addCourse method used to add and drop a course
+     * from a user's current schedule with course id directly specified
+     *
+     * @param courseToAdd The course id to be added to the user profile
+     */
+
+    public void addCourse(String courseToAdd) {
         String selected = ddTerm.getSelectedItem().toString();
-        final String course = view.getTag().toString();
+        final String course = courseToAdd;
+        //final String course = view.getTag().toString();
 
         switch (selected) {
             case "Fall":
@@ -329,43 +344,45 @@ public class CoursesActivity extends AppCompatActivity {
         // Creating alert Dialog with one Button
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(CoursesActivity.this);
 
-        // Setting Dialog Title
-        alertDialog.setTitle("");
-
         // Setting Dialog Message
-        alertDialog.setMessage("Enter a comma delimited list of courses to register for:");
+        alertDialog.setMessage("Enter a comma delimited list of courses to register:");
         final EditText input = new EditText(CoursesActivity.this);
+        //set possible inmput to only letters and comma
+        input.setKeyListener(DigitsKeyListener.getInstance("0123456789,"));
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
         input.setLayoutParams(lp);
         alertDialog.setView(input);
-        //alertDialog.setView(input);
 
         // Setting Icon to Dialog TODO: Fix this
         //alertDialog.setIcon(R.drawable.key);
 
         // Setting Positive "Yes" Button
-        alertDialog.setPositiveButton("YES",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Write your code here to execute after dialog
+        alertDialog.setPositiveButton("Submit",
+            new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    // Write your code here to execute after dialog
+                    parseAddIDs(input.getText().toString());
+                }
+            });
 
-                    }
-                });
-        // Setting Negative "NO" Button
-        alertDialog.setNegativeButton("NO",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Write your code here to execute after dialog
-                        dialog.cancel();
-                    }
-                });
-
-        // closed
+        //alertDialog.
 
         // Showing Alert Message
         alertDialog.show();
+    }
+
+    /**
+     * Parses a comma delimited string of courses and adds each one using the addCourse Method
+     * User will recieve a popup for each method
+     * @param input
+     */
+    private void parseAddIDs(String input){
+        String[] IDs = input.split(",");
+        for(String curr: IDs){
+            addCourse(curr);
+        }
     }
 
 }
