@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">CoursePicker</string>
 
+
+    <string name="action_favourite">Add</string>
+    <string name="action_settings">Advanced</string>
+
     <!-- Strings related to login -->
     <string name="prompt_id">ID</string>
     <string name="prompt_password">Password</string>

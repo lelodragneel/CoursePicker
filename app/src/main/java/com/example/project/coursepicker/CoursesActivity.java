@@ -1,15 +1,21 @@
 package com.example.project.coursepicker;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
+import android.text.method.DigitsKeyListener;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -25,11 +31,12 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * @author Lawrence, Brianna, Kenny, Jake
- * Activity class for displaying and manipulating
- * the course selection.
- * Courses are organized by semester (fall/winter).
+ * @author Lawrence, Brianna, Kenny, Jake, Michael
+ *         Activity class for displaying and manipulating
+ *         the course selection.
+ *         Courses are organized by semester (fall/winter).
  */
+
 public class CoursesActivity extends AppCompatActivity {
 
     private DatabaseReference db_root;
@@ -42,6 +49,7 @@ public class CoursesActivity extends AppCompatActivity {
     private ArrayList<Course> winterCourses;
     private String uid = "Ab123456"; // mockup user id variable
     private AlertDialog.Builder alertBuilder;
+    private Button addID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,58 +164,71 @@ public class CoursesActivity extends AppCompatActivity {
     }
 
     /**
-    * addCourse method used to add and drop a course
-    * from a user's current schedule
-    * @param view The view where the add/drop button was clicked
-    */
+     * addCourse method used to add and drop a course
+     * from a user's current schedule
+     *
+     * @param view The view where the add/drop button was clicked
+     */
+
     public void addCourse(View view) {
+        addCourse(view.getTag().toString());
+    }
+
+    /**
+     * addCourse method used to add and drop a course
+     * from a user's current schedule with course id directly specified
+     *
+     * @param courseToAdd The course id to be added to the user profile
+     */
+
+    public void addCourse(String courseToAdd) {
         String selected = ddTerm.getSelectedItem().toString();
-        final String course = view.getTag().toString();
+        final String course = courseToAdd;
+        //final String course = view.getTag().toString();
 
         switch (selected) {
             case "Fall":
                 db_root.child("Users").child(uid).child("Courses").child("Fall")
                         .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot data) {
-                         if (!data.hasChild(course)) {
-                             db_root.child("Users").child(uid).child("Courses").child("Fall")
-                                     .child(course).setValue(true);
-                             Toast.makeText(getApplicationContext(), "Successfully " +
-                                     "Enrolled in " + course, Toast.LENGTH_LONG).show();
-                             seatCounterAddition(db_root.child("Fall Term ").child(course), -1);
-                          }
-                          else {
-                             displayAlert(course, "Fall Term ");
-                         }
-                    }
+                            @Override
+                            public void onDataChange(DataSnapshot data) {
+                                if (!data.hasChild(course)) {
+                                    db_root.child("Users").child(uid).child("Courses").child("Fall")
+                                            .child(course).setValue(true);
+                                    Toast.makeText(getApplicationContext(), "Successfully " +
+                                            "Enrolled in " + course, Toast.LENGTH_LONG).show();
+                                    seatCounterAddition(db_root.child("Fall Term ").child(course), -1);
+                                } else {
+                                    displayAlert(course, "Fall Term ");
+                                }
+                            }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
-            break;
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                            }
+                        });
+                break;
 
             case "Winter":
                 db_root.child("Users").child(uid).child("Courses").child("Winter")
                         .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot data) {
-                        if (!data.hasChild(course)) {
-                            db_root.child("Users").child(uid).child("Courses").child("Winter")
-                                    .child(course).setValue(true);
-                            Toast.makeText(getApplicationContext(), "Successfully " +
-                                    "Enrolled in " + course, Toast.LENGTH_LONG).show();
-                            seatCounterAddition(db_root.child("Winter Term").child(course), -1);
-                        }
-                        else {
-                            displayAlert(course, "Winter Term");
-                        }
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
+                            @Override
+                            public void onDataChange(DataSnapshot data) {
+                                if (!data.hasChild(course)) {
+                                    db_root.child("Users").child(uid).child("Courses").child("Winter")
+                                            .child(course).setValue(true);
+                                    Toast.makeText(getApplicationContext(), "Successfully " +
+                                            "Enrolled in " + course, Toast.LENGTH_LONG).show();
+                                    seatCounterAddition(db_root.child("Winter Term").child(course), -1);
+                                } else {
+                                    displayAlert(course, "Winter Term");
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                            }
+                        });
                 break;
         }
 
@@ -217,9 +238,10 @@ public class CoursesActivity extends AppCompatActivity {
     /**
      * Method specifically for incrementing and decrementing the seat counter for a specified course
      *
-     * @param courseSubDatabase     The database reference with the root of a course
-     * @param add                   Integer to perform arithmetic with seat counter, can be negative
+     * @param courseSubDatabase The database reference with the root of a course
+     * @param add               Integer to perform arithmetic with seat counter, can be negative
      */
+
     private void seatCounterAddition(final DatabaseReference courseSubDatabase, final int add) {
         courseSubDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -242,8 +264,9 @@ public class CoursesActivity extends AppCompatActivity {
      * displayAlert method is called when the user clicks the drop button
      * on a course they're already enrolled in. This method will display a
      * pop-up allowing the option of dropping the course, or cancelling the drop request.
-     * @param course    the course the user is attempting to drop
-     * @param semester  the semester in which the course is held (Fall or Winter)
+     *
+     * @param course   the course the user is attempting to drop
+     * @param semester the semester in which the course is held (Fall or Winter)
      */
     private void displayAlert(final String course, final String semester) {
 
@@ -259,7 +282,7 @@ public class CoursesActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 db_root.child("Users").child(uid).child("Courses").child(semester).child(course)
                         .removeValue();
-                Toast.makeText(getApplicationContext(), "Successfully Dropped " + course ,
+                Toast.makeText(getApplicationContext(), "Successfully Dropped " + course,
                         Toast.LENGTH_LONG).show();
                 seatCounterAddition(db_root.child(semester).child(course), 1);
             }
@@ -303,7 +326,7 @@ public class CoursesActivity extends AppCompatActivity {
                 }
                 break;
             default:
-                Log.e("refreshAccordion","could not populate accordion");
+                Log.e("refreshAccordion", "could not populate accordion");
         }
 
         // recreate adapter with new data
@@ -314,6 +337,55 @@ public class CoursesActivity extends AppCompatActivity {
 
         listAdapter.notifyDataSetChanged(); // sync accordion data
 
+    }
+
+    /**
+     * Called when the user touches the addID button
+     * Method produces a dialog with an edittext for user input and passes information on to
+     */
+    public void addByID(View view) {
+        // Creating alert Dialog with one Button
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(CoursesActivity.this);
+
+        // Setting Dialog Message
+        alertDialog.setMessage("Enter a comma delimited list of courses to register:");
+        final EditText input = new EditText(CoursesActivity.this);
+        //set possible inmput to only letters and comma
+        input.setKeyListener(DigitsKeyListener.getInstance("0123456789,"));
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        input.setLayoutParams(lp);
+        alertDialog.setView(input);
+
+        // Setting Icon to Dialog TODO: Fix this
+        //alertDialog.setIcon(R.drawable.key);
+
+        // Setting Positive "Yes" Button
+        alertDialog.setPositiveButton("Submit",
+            new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    // Write your code here to execute after dialog
+                    parseAddIDs(input.getText().toString());
+                }
+            });
+
+        //alertDialog.
+
+        // Showing Alert Message
+        alertDialog.show();
+    }
+
+    /**
+     * Parses a comma delimited string of courses and adds each one using the addCourse Method
+     * User will recieve a popup for each method
+     * @param input
+     */
+    private void parseAddIDs(String input){
+        String[] IDs = input.split(",");
+        for(String curr: IDs){
+            addCourse(curr);
+        }
     }
 
 }
