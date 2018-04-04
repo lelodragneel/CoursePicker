@@ -29,9 +29,9 @@ public class changePassword extends AppCompatActivity {
         db_root = FirebaseDatabase.getInstance().getReference();
         database_u_id = db_root.child("Users").child("Ab123456");
 
-        user_newPW = (EditText) findViewById(R.id.newPassword);
-        user_retypePW = (EditText) findViewById(R.id.retypePassword);
-        resetPW = (Button) findViewById(R.id.newPasswordBtn);
+        user_newPW = findViewById(R.id.newPassword);
+        user_retypePW = findViewById(R.id.retypePassword);
+        resetPW = findViewById(R.id.newPasswordBtn);
 
         resetPW.setOnClickListener(new View.OnClickListener(){
             @Override

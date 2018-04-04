@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.project.coursepicker.lib.FireHelper;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -55,7 +56,8 @@ public class CoursesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_courses);
 
-        //action/toolbar
+        FireHelper fh = FireHelper.getInstance();
+
         Toolbar toolbar = findViewById(R.id.my_toolbar);
 
         setSupportActionBar(toolbar);
@@ -158,6 +160,7 @@ public class CoursesActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+
     }
 
     /**
