@@ -21,13 +21,14 @@ import com.google.firebase.database.ValueEventListener;
 
 public class userProfile extends AppCompatActivity {
 
-    DatabaseReference db_root, database_u_id;
+    private DatabaseReference db_root, database_u_id;
     private TextView user_ID;
     private TextView user_nameView;
     private TextView user_ChangePW;
     private EditText user_Email;
     private EditText user_Phone;
     private Button user_Update;
+    private String uid = "Ab123456"; // ------ need reference to seesion class??
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,25 +36,34 @@ public class userProfile extends AppCompatActivity {
         setContentView(R.layout.user_profile);
 
         db_root = FirebaseDatabase.getInstance().getReference();
-        database_u_id = db_root.child("Users").child("Ab123456");    //-----need reference to session class??
+        database_u_id = db_root.child("Users");    //-----need reference to session class??
 
-        user_ID = findViewById(R.id.userID);
-        user_nameView = findViewById(R.id.userNameViewer);
-        user_ChangePW = findViewById(R.id.changePWBtn);
-        user_Email = findViewById(R.id.userEmail);
-        user_Phone = findViewById(R.id.userPhone);
-        user_Update = findViewById(R.id.updateProfileBtn);
+        database_u_id.addValueEventListener(new ValueEventListener(){
+            @Override
+            public void onDataChange (DataSnapshot dataSnapshot){
+                //DataSnapshot pSnapshot = (DataSnapshot) dataSnapshot.getChildren();
 
-        //user_ID.setText(database_u_id.toString());               //need to fix value coming from firebase
-        //user_nameView.setText(database_u_id.child("Name").toString());    //need to fix value coming from firebase
-        user_ID.setText("Ab123456");    //temp value
-        user_nameView.setText("Juliano Franz"); //temp value
+                user_ID = findViewById(R.id.userID);
+                user_nameView = findViewById(R.id.userNameViewer);
+                user_ChangePW = findViewById(R.id.changePWBtn);
+                user_Email = findViewById(R.id.userEmail);
+                user_Phone = findViewById(R.id.userPhone);
+                user_Update = findViewById(R.id.updateProfileBtn);
 
-        //user_Email.setText(database_u_id.child("Email").toString());  //need to fix value coming from firebase
-        //user_Phone.setText(database_u_id.child("Phone").toString());  //need to fix value coming from firebase
-        user_Email.setText("Ab123456@dal.ca");  //temp value
-        user_Phone.setText("9021234567");   //temp value
+                for (DataSnapshot pSnapshot : dataSnapshot.getChildren()) {
+                    if (uid.equals(pSnapshot.getKey())){
+                        user_ID.setText(pSnapshot.getKey());
+                        user_nameView.setText(pSnapshot.child("Name").getValue(String.class));
+                        user_Email.setText(pSnapshot.child("Email").getValue(String.class));
+                        user_Phone.setText(pSnapshot.child("Phone").getValue(String.class));
+                        break;
+                    }
+                }
 
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError){ }
+        });
 
         user_Update.setOnClickListener(new View.OnClickListener(){
             @Override
