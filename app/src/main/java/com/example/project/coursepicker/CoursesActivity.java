@@ -1,27 +1,18 @@
 package com.example.project.coursepicker;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.InputType;
-import android.text.method.DigitsKeyListener;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Button;
 import android.widget.ExpandableListView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.project.coursepicker.lib.FireHelper;
-import com.example.project.coursepicker.lib.FireHelper;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,12 +24,11 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * @author Lawrence, Brianna, Kenny, Jake, Michael
- *         Activity class for displaying and manipulating
- *         the course selection.
- *         Courses are organized by semester (fall/winter).
+ * @author Lawrence, Brianna, Kenny, Jake
+ * Activity class for displaying and manipulating
+ * the course selection.
+ * Courses are organized by semester (fall/winter).
  */
-
 public class CoursesActivity extends AppCompatActivity {
 
     private DatabaseReference db_root;
@@ -51,15 +41,11 @@ public class CoursesActivity extends AppCompatActivity {
     private ArrayList<Course> winterCourses;
     private String uid = "Ab123456"; // mockup user id variable
     private AlertDialog.Builder alertBuilder;
-    private Button addID;
-    private FireHelper fh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_courses);
-
-        fh = FireHelper.getInstance();
 
         Toolbar toolbar = findViewById(R.id.my_toolbar);
 
@@ -163,9 +149,7 @@ public class CoursesActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-
     }
-
 
     /**
      * addCourse method used to add and drop a course
@@ -250,7 +234,6 @@ public class CoursesActivity extends AppCompatActivity {
         });
     }
 
-
     /**
      * displayAlert method is called when the user clicks the drop button
      * on a course they're already enrolled in. This method will display a
@@ -296,6 +279,32 @@ public class CoursesActivity extends AppCompatActivity {
         });
         alertBuilder.show();
     }
+
+    /**
+     * Method specifically for incrementing and decrementing the seat counter for a specified course
+     *
+     * @param courseSubDatabase     The database reference with the root of a course
+     * @param add                   Integer to perform arithmetic with seat counter, can be negative
+     */
+  /*  private void seatCounterAddition(final DatabaseReference courseSubDatabase, final int add) {
+        courseSubDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int counter = dataSnapshot.child("Seats Available").getValue(Integer.class);
+                counter += add;
+                courseSubDatabase.child("Seats Available").setValue(counter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        // update accordion to display new seat count
+        refreshAccordion();
+    } */
+
+
     /**
      * Method to check to see which term is selected in the spinner, then returns a database reference
      * pointing to the correct sub-database
@@ -339,58 +348,4 @@ public class CoursesActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * Called when the user touches the addID button
-     * Method produces a dialog with an edittext for user input and passes information on to
-     */
-    public void addByID(View view) {
-        // Creating alert Dialog with one Button
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(CoursesActivity.this);
-
-        // Setting Dialog Message
-        alertDialog.setMessage("Enter a comma delimited list of courses to register:");
-        final EditText input = new EditText(CoursesActivity.this);
-        //set possible inmput to only letters and comma
-        //input.setKeyListener(DigitsKeyListener.getInstance("0123456789,"));
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT);
-        input.setLayoutParams(lp);
-        alertDialog.setView(input);
-
-        // Setting Icon to Dialog TODO: Fix this
-        //alertDialog.setIcon(R.drawable.key);
-
-        // Setting Positive "Yes" Button
-        alertDialog.setPositiveButton("Submit",
-            new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    // Write your code here to execute after dialog
-                    parseAddIDs(input.getText().toString());
-                }
-            });
-
-        //alertDialog.
-
-        // Showing Alert Message
-        alertDialog.show();
-    }
-
-    /**
-     * Parses a comma delimited string of courses and adds each one using the addCourse Method
-     * User will recieve a popup for each method
-     * @param input
-     */
-
-    private void parseAddIDs(String input){
-        String[] IDs = input.split(",");
-        for(String curr: IDs){
-            /*if(fh.addCourseToStudent(uid, curr)){
-                //insert success message here
-            } else{
-                //insert failure message here
-            }*/
-          //  addCourse(curr);
-        }
-    }
 }
