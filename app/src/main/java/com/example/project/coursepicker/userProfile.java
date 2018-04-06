@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +15,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by christian on 2018-03-12.
@@ -21,39 +23,51 @@ import com.google.firebase.database.ValueEventListener;
 
 public class userProfile extends AppCompatActivity {
 
-    DatabaseReference db_root, database_u_id;
+    private DatabaseReference db_root, database_u_id;
+    private ImageView picture;
     private TextView user_ID;
     private TextView user_nameView;
     private TextView user_ChangePW;
     private EditText user_Email;
     private EditText user_Phone;
     private Button user_Update;
+    private String uid = "Ab123456"; // ------ need reference to session class??
+    private String url = "https://firebasestorage.googleapis.com/v0/b/courseselection-2ce4a.appspot.com/o/Profile%20Picture%2Fprofile_picture.jpg?alt=media&token=9e0f361d-399e-4b09-bc78-201cb8c59683";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_profile);
 
+        picture = findViewById(R.id.profilePicture);
+        user_ID = findViewById(R.id.userID);
+        user_nameView = findViewById(R.id.userNameViewer);
+        user_ChangePW = findViewById(R.id.changePWBtn);
+        user_Email = findViewById(R.id.userEmail);
+        user_Phone = findViewById(R.id.userPhone);
+        user_Update = findViewById(R.id.updateProfileBtn);
+
+        Picasso.with(getApplicationContext()).load(url).into(picture);
+
         db_root = FirebaseDatabase.getInstance().getReference();
-        database_u_id = db_root.child("Users").child("Ab123456");    //-----need reference to session class??
+        database_u_id = db_root.child("Users");    //-----need reference to session class??
 
-        user_ID = (TextView) findViewById(R.id.userID);
-        user_nameView = (TextView) findViewById(R.id.userNameViewer);
-        user_ChangePW = (TextView) findViewById(R.id.changePWBtn);
-        user_Email = (EditText) findViewById(R.id.userEmail);
-        user_Phone = (EditText) findViewById(R.id.userPhone);
-        user_Update = (Button) findViewById(R.id.updateProfileBtn);
+        database_u_id.addValueEventListener(new ValueEventListener(){
+            @Override
+            public void onDataChange (DataSnapshot dataSnapshot){
 
-        //user_ID.setText(database_u_id.toString());               //need to fix value coming from firebase
-        //user_nameView.setText(database_u_id.child("Name").toString());    //need to fix value coming from firebase
-        user_ID.setText("Ab123456");    //temp value
-        user_nameView.setText("Juliano Franz"); //temp value
-
-        //user_Email.setText(database_u_id.child("Email").toString());  //need to fix value coming from firebase
-        //user_Phone.setText(database_u_id.child("Phone").toString());  //need to fix value coming from firebase
-        user_Email.setText("Ab123456@dal.ca");  //temp value
-        user_Phone.setText("9021234567");   //temp value
-
+                for (DataSnapshot pSnapshot : dataSnapshot.getChildren()) {
+                    if (uid.equals(pSnapshot.getKey())) {
+                        user_ID.setText(pSnapshot.getKey());
+                        user_nameView.setText(pSnapshot.child("Name").getValue(String.class));
+                        user_Email.setText(pSnapshot.child("Email").getValue(String.class));
+                        user_Phone.setText(pSnapshot.child("Phone").getValue(String.class));
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError){ }
+        });
 
         user_Update.setOnClickListener(new View.OnClickListener(){
             @Override

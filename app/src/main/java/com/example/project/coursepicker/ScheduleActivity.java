@@ -48,7 +48,7 @@ public class ScheduleActivity extends AppCompatActivity {
         Query query = firebaseReference.orderByChild("order");
 
         //Get the reference to the UI contents
-        contactListView = (ListView) findViewById(R.id.listView);
+        contactListView = findViewById(R.id.listView);
 
         //Set up the List View
         firebaseAdapter = new FirebaseListAdapter<Course>(this, Course.class,
@@ -58,7 +58,7 @@ public class ScheduleActivity extends AppCompatActivity {
 
             @Override
             protected void populateView(View v, Course model, int position) {
-                TextView contactName = (TextView)v.findViewById(android.R.id.text1);
+                TextView contactName = v.findViewById(android.R.id.text1);
                 contactName.setText(model.getClassDays() + " - " + model.getClassTime() + " - " + model.getName());
             }
 
