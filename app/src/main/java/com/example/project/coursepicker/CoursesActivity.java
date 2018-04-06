@@ -50,13 +50,14 @@ public class CoursesActivity extends AppCompatActivity {
     private String uid = "Ab123456"; // mockup user id variable
     private AlertDialog.Builder alertBuilder;
     private Button addID;
+    private FireHelper fh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_courses);
 
-        FireHelper fh = FireHelper.getInstance();
+        fh = FireHelper.getInstance();
 
         Toolbar toolbar = findViewById(R.id.my_toolbar);
 
@@ -197,7 +198,7 @@ public class CoursesActivity extends AppCompatActivity {
                                             .child(course).setValue(true);
                                     Toast.makeText(getApplicationContext(), "Successfully " +
                                             "Enrolled in " + course, Toast.LENGTH_LONG).show();
-                                    seatCounterAddition(db_root.child("Fall Term ").child(course), -1);
+                                    //seatCounterAddition(db_root.child("Fall Term ").child(course), -1);
                                 } else {
                                     displayAlert(course, "Fall Term ");
                                 }
@@ -219,7 +220,7 @@ public class CoursesActivity extends AppCompatActivity {
                                             .child(course).setValue(true);
                                     Toast.makeText(getApplicationContext(), "Successfully " +
                                             "Enrolled in " + course, Toast.LENGTH_LONG).show();
-                                    seatCounterAddition(db_root.child("Winter Term").child(course), -1);
+                                    //seatCounterAddition(db_root.child("Winter Term").child(course), -1);
                                 } else {
                                     displayAlert(course, "Winter Term");
                                 }
@@ -351,7 +352,7 @@ public class CoursesActivity extends AppCompatActivity {
         alertDialog.setMessage("Enter a comma delimited list of courses to register:");
         final EditText input = new EditText(CoursesActivity.this);
         //set possible inmput to only letters and comma
-        input.setKeyListener(DigitsKeyListener.getInstance("0123456789,"));
+        //input.setKeyListener(DigitsKeyListener.getInstance("0123456789,"));
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
@@ -381,11 +382,16 @@ public class CoursesActivity extends AppCompatActivity {
      * User will recieve a popup for each method
      * @param input
      */
+
     private void parseAddIDs(String input){
         String[] IDs = input.split(",");
         for(String curr: IDs){
+            /*if(fh.addCourseToStudent(uid, curr)){
+                //insert success message here
+            } else{
+                //insert failure message here
+            }*/
             addCourse(curr);
         }
     }
-
 }
