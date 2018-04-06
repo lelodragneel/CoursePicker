@@ -28,12 +28,19 @@ public class userProfile extends AppCompatActivity {
     private EditText user_Email;
     private EditText user_Phone;
     private Button user_Update;
-    private String uid = "Ab123456"; // ------ need reference to seesion class??
+    private String uid = "Ab123456"; // ------ need reference to session class??
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_profile);
+
+        user_ID = findViewById(R.id.userID);
+        user_nameView = findViewById(R.id.userNameViewer);
+        user_ChangePW = findViewById(R.id.changePWBtn);
+        user_Email = findViewById(R.id.userEmail);
+        user_Phone = findViewById(R.id.userPhone);
+        user_Update = findViewById(R.id.updateProfileBtn);
 
         db_root = FirebaseDatabase.getInstance().getReference();
         database_u_id = db_root.child("Users");    //-----need reference to session class??
@@ -41,25 +48,15 @@ public class userProfile extends AppCompatActivity {
         database_u_id.addValueEventListener(new ValueEventListener(){
             @Override
             public void onDataChange (DataSnapshot dataSnapshot){
-                //DataSnapshot pSnapshot = (DataSnapshot) dataSnapshot.getChildren();
-
-                user_ID = findViewById(R.id.userID);
-                user_nameView = findViewById(R.id.userNameViewer);
-                user_ChangePW = findViewById(R.id.changePWBtn);
-                user_Email = findViewById(R.id.userEmail);
-                user_Phone = findViewById(R.id.userPhone);
-                user_Update = findViewById(R.id.updateProfileBtn);
 
                 for (DataSnapshot pSnapshot : dataSnapshot.getChildren()) {
-                    if (uid.equals(pSnapshot.getKey())){
+                    if (uid.equals(pSnapshot.getKey())) {
                         user_ID.setText(pSnapshot.getKey());
                         user_nameView.setText(pSnapshot.child("Name").getValue(String.class));
                         user_Email.setText(pSnapshot.child("Email").getValue(String.class));
                         user_Phone.setText(pSnapshot.child("Phone").getValue(String.class));
-                        break;
                     }
                 }
-
             }
             @Override
             public void onCancelled(DatabaseError databaseError){ }
