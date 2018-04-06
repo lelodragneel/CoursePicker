@@ -1,18 +1,27 @@
 package com.example.project.coursepicker;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
+import android.text.method.DigitsKeyListener;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.project.coursepicker.lib.FireHelper;
+import com.example.project.coursepicker.lib.FireHelper;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,10 +33,10 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * @author Lawrence, Brianna, Kenny, Jake
- * Activity class for displaying and manipulating
- * the course selection.
- * Courses are organized by semester (fall/winter).
+ * @author Lawrence, Brianna, Kenny, Jake, Michael, Eric
+ *         Activity class for displaying and manipulating
+ *         the course selection.
+ *         Courses are organized by semester (fall/winter).
  */
 public class CoursesActivity extends AppCompatActivity {
 
@@ -221,8 +230,10 @@ public class CoursesActivity extends AppCompatActivity {
                     } else
                         displayAlert(course, semester, "No seats available. Request override for ", "Course Full");
                 }
+                else if (fallCourses.size() >= 5 && counter <= 0)
+                    displayAlert(course, semester, "Course full and limit reached. Request override for ", "Registration Error");
                 else
-                    displayAlert(course, semester, "Course Limit Reached. Request override for ", "Course Max");
+                    displayAlert(course, semester, "Course limit reached. Request override for ", "Course Max");
 
 
 
@@ -253,19 +264,28 @@ public class CoursesActivity extends AppCompatActivity {
         alertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
+                DatabaseReference userRequests = db_root.child("Users").child(uid).child("Requests").child(semester);
+                DatabaseReference userCourse = db_root.child("Users").child(uid).child("Courses").child(semester).child(course);
                 if (title.equals("Drop Course")) {
-                    db_root.child("Users").child(uid).child("Courses").child(semester).child(course).removeValue();
+                    userCourse.removeValue();
                     Toast.makeText(getApplicationContext(), "Successfully Dropped " + course,
                             Toast.LENGTH_LONG).show();
                     seatCounterAddition(db_root.child(semester).child(course), 1, course, semester);
                 }
                 else if (title.equals("Course Full")) {
-                    db_root.child("Users").child(uid).child("Requests").child(semester).child("overrideFull").child(course).setValue(true);
+                    userRequests.child("overrideFull").child(course).setValue(true);
                     Toast.makeText(getApplicationContext(), "Override Requested for " + course,
                             Toast.LENGTH_LONG).show();
                 }
                 else if (title.equals("Course Max")) {
-                    db_root.child("Users").child(uid).child("Requests").child(semester).child("courseLimit").child(course).setValue(true);
+                    userRequests.child("courseLimit").child(course).setValue(true);
+                    Toast.makeText(getApplicationContext(), "Override Requested for " + course,
+                            Toast.LENGTH_LONG).show();
+                }
+                else if (title.equals("Registration Error")) {
+                    userRequests.child("courseLimit").child(course).setValue(true);
+                    userRequests.child("overrideFull").child(course).setValue(true);
                     Toast.makeText(getApplicationContext(), "Override Requested for " + course,
                             Toast.LENGTH_LONG).show();
                 }
@@ -348,4 +368,58 @@ public class CoursesActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Called when the user touches the addID button
+     * Method produces a dialog with an edittext for user input and passes information on to
+     */
+    public void addByID(View view) {
+        // Creating alert Dialog with one Button
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(CoursesActivity.this);
+
+        // Setting Dialog Message
+        alertDialog.setMessage("Enter a comma delimited list of courses to register:");
+        final EditText input = new EditText(CoursesActivity.this);
+        //set possible inmput to only letters and comma
+        //input.setKeyListener(DigitsKeyListener.getInstance("0123456789,"));
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        input.setLayoutParams(lp);
+        alertDialog.setView(input);
+
+        // Setting Icon to Dialog TODO: Fix this
+        //alertDialog.setIcon(R.drawable.key);
+
+        // Setting Positive "Yes" Button
+        alertDialog.setPositiveButton("Submit",
+            new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    // Write your code here to execute after dialog
+                    parseAddIDs(input.getText().toString());
+                }
+            });
+
+        //alertDialog.
+
+        // Showing Alert Message
+        alertDialog.show();
+    }
+
+    /**
+     * Parses a comma delimited string of courses and adds each one using the addCourse Method
+     * User will recieve a popup for each method
+     * @param input
+     */
+
+    private void parseAddIDs(String input){
+        String[] IDs = input.split(",");
+        for(String curr: IDs){
+            /*if(fh.addCourseToStudent(uid, curr)){
+                //insert success message here
+            } else{
+                //insert failure message here
+            }*/
+        //    addCourse(curr);
+        }
+    }
 }
