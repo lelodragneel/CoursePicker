@@ -2,11 +2,10 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.example.project.coursepicker"
-        minSdkVersion 26
-        targetSdkVersion 26
+        minSdkVersion 18
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -29,10 +28,9 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
-    compile 'com.google.firebase:firebase-core:11.8.0'
-    compile 'com.firebaseui:firebase-ui-database:0.4.0'
-    compile 'com.squareup.picasso:picasso:2.5.1'
+    implementation 'com.google.firebase:firebase-core:11.8.0'
+    implementation 'com.firebaseui:firebase-ui-database:0.4.0'
+    implementation 'com.squareup.picasso:picasso:2.5.1'
 }
-
 
 apply plugin: 'com.google.gms.google-services'
