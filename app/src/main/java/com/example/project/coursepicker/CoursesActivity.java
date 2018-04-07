@@ -352,7 +352,7 @@ public class CoursesActivity extends AppCompatActivity {
         alertDialog.setMessage("Enter a comma delimited list of courses to register:");
         final EditText input = new EditText(CoursesActivity.this);
         //set possible inmput to only letters and comma
-        //input.setKeyListener(DigitsKeyListener.getInstance("0123456789,"));
+        input.setKeyListener(DigitsKeyListener.getInstance("0123456789,"));
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
@@ -386,12 +386,7 @@ public class CoursesActivity extends AppCompatActivity {
     private void parseAddIDs(String input){
         String[] IDs = input.split(",");
         for(String curr: IDs){
-            /*if(fh.addCourseToStudent(uid, curr)){
-                //insert success message here
-            } else{
-                //insert failure message here
-            }*/
-            addCourse(curr);
+            fh.addCourseToStudent(uid,curr);
         }
     }
 }

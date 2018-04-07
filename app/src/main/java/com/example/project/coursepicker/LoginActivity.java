@@ -35,12 +35,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
      */
+
     private static final String[] DUMMY_CREDENTIALS = new String[]{
             "foo@example.com:hello", "ab123456:word1234$"
     };
+
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
+
     private UserLoginTask authTask = null;
 
     // UI references.
@@ -48,7 +51,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText passwordView;
     private View progressView;
     private View loginFormView;
-
+    private Session session;
     private boolean testMode = true;
 
   //  private Session session;
@@ -59,6 +62,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         setContentView(R.layout.activity_login);
 
         FireHelper fh = FireHelper.getInstance();
+
+        session = new Session(getApplicationContext());
 
         //create a new session to store session variables
    //     session = ((Session)this.getApplication());
@@ -136,9 +141,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            //TODO: Program username and password checks here, delete unused methods
-            //set loginID for session
 
+            //set loginID for session
+            session.setID(email);
 
             startDashboard();
             /*authTask = new UserLoginTask(email, password);

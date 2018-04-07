@@ -228,18 +228,4 @@ public class FireHelper {
         return false;
     }
 
-    public Collection<Course> getCourseConflicts(String studentId) {
-        if (globalStudents.containsKey(studentId)) {
-            Course[][] matrix = new Course[4][];
-            for (Course c : getStudentCourses(studentId)) {
-                for (String i : c.getCoursePeriods().keySet()) {
-                    //TODO
-                }
-            }
-        } else {
-            Log.e(getClass().getName(), String.format("invalid student id %s", studentId));
-        }
-        return null;
-    }
-
 }

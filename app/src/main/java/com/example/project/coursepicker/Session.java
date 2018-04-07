@@ -27,9 +27,9 @@ public class Session extends Application {
     public Session()
     {}
 
-    public void ID(String loginID)
+    public void setID(String loginID)
     {
-        session.edit().putString("ID", loginID);
+        edit.putString("ID", loginID);
         edit.apply();
     }
 
