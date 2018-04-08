@@ -69,6 +69,14 @@ public class Student {
         return studentPassword;
     }
 
+    public void setStudentEmail(String studentEmail) {
+        this.studentEmail = studentEmail;
+    }
+
+    public void setStudentPassword(String studentPassword) {
+        this.studentPassword = studentPassword;
+    }
+
     public long getStudentPhone() {
         return studentPhone;
     }

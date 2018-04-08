@@ -11,11 +11,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import static android.os.Build.VERSION_CODES.N;
-import static java.util.jar.Pack200.Packer.ERROR;
 
 /**
  * Created by Lawrence Ayoub on 3/23/2018.
@@ -165,6 +161,16 @@ public class FireHelper {
             Log.e(getClass().getName(), String.format("invalid student id %s", studentId));
         }
         return c;
+    }
+
+    public void updateStudent(Student student) {
+        if (globalStudents.containsKey(student.getStudentId())) {
+            Map<String, Object> childUpdates = new HashMap<>();
+            childUpdates.put(student.getStudentId(), student);
+            db_students.updateChildren(childUpdates);
+        } else {
+            Log.e(getClass().getName(), String.format("invalid student id %s", student.getStudentId()));
+        }
     }
 
     public boolean addCourseToStudent(String studentId, String courseId) {
