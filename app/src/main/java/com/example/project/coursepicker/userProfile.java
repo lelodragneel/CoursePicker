@@ -33,6 +33,7 @@ public class userProfile extends AppCompatActivity {
     private Button user_Update;
     private String uid = "Ab123456"; // ------ need reference to session class??
     private String url = "https://firebasestorage.googleapis.com/v0/b/courseselection-2ce4a.appspot.com/o/Profile%20Picture%2Fprofile_picture.jpg?alt=media&token=9e0f361d-399e-4b09-bc78-201cb8c59683";
+    private Session session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,8 @@ public class userProfile extends AppCompatActivity {
         user_Phone = findViewById(R.id.userPhone);
         user_Update = findViewById(R.id.updateProfileBtn);
 
+        session = new Session(getApplicationContext());
+
         Picasso.with(getApplicationContext()).load(url).into(picture);
 
         db_root = FirebaseDatabase.getInstance().getReference();
@@ -58,7 +61,7 @@ public class userProfile extends AppCompatActivity {
 
                 for (DataSnapshot pSnapshot : dataSnapshot.getChildren()) {
                     if (uid.equals(pSnapshot.getKey())) {
-                        user_ID.setText(pSnapshot.getKey());
+                        user_ID.setText(session.getID()/*pSnapshot.getKey()*/);
                         user_nameView.setText(pSnapshot.child("Name").getValue(String.class));
                         user_Email.setText(pSnapshot.child("Email").getValue(String.class));
                         user_Phone.setText(pSnapshot.child("Phone").getValue(String.class));

@@ -1,12 +1,8 @@
 package com.example.project.coursepicker.lib;
 
-import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Lawrence Ayoub on 3/24/2018.
@@ -73,21 +69,16 @@ public class Student {
         return studentPassword;
     }
 
-    public long getStudentPhone() {
-        return studentPhone;
+    public void setStudentEmail(String studentEmail) {
+        this.studentEmail = studentEmail;
     }
 
-    @Exclude
-    public Map<String, Object> toMap() {
-        HashMap<String, Object> result = new HashMap<>();
-        result.put("studentName", studentName);
-        result.put("studentId", studentId);
-        result.put("studentCourses", studentCourses);
-        result.put("studentEmail", studentEmail);
-        result.put("studentPassword", studentPassword);
-        result.put("studentPhone", studentPhone);
+    public void setStudentPassword(String studentPassword) {
+        this.studentPassword = studentPassword;
+    }
 
-        return result;
+    public long getStudentPhone() {
+        return studentPhone;
     }
 
 }
