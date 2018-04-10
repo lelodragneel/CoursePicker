@@ -61,7 +61,7 @@ public class userProfile extends AppCompatActivity {
 
                 for (DataSnapshot pSnapshot : dataSnapshot.getChildren()) {
                     if (uid.equals(pSnapshot.getKey())) {
-                        user_ID.setText(session.getID()/*pSnapshot.getKey()*/);
+                        user_ID.setText(/*session.getID()*/pSnapshot.getKey());
                         user_nameView.setText(pSnapshot.child("Name").getValue(String.class));
                         user_Email.setText(pSnapshot.child("Email").getValue(String.class));
                         user_Phone.setText(pSnapshot.child("Phone").getValue(String.class));

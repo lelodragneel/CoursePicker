@@ -36,6 +36,7 @@ import java.util.List;
  *         the course selection.
  *         Courses are organized by semester (fall/winter).
  */
+
 public class CoursesActivity extends AppCompatActivity {
 
     private DatabaseReference db_root;
@@ -159,14 +160,25 @@ public class CoursesActivity extends AppCompatActivity {
     }
 
     /**
-     * addCourse method used to add and drop a course
-     * from a user's current schedule
+     * Allows adding a course to a student based on a view object from which the name of the course
+     * still needs to be extracted.
      *
      * @param view The view where the add/drop button was clicked
      */
+
     public void addCourse(View view) {
+        addCourse(view.getTag().toString());
+    }
+
+    /**
+     * addCourse method used to add and drop a course
+     * from a user's current schedule
+     *
+     * @param courseID course ID in string form of course to be added to student
+     */
+    public void addCourse(String courseID) {
         String selected = ddTerm.getSelectedItem().toString();
-        final String course = view.getTag().toString();
+        final String course = courseID;
 
         switch (selected) {
             case "Fall":
@@ -412,12 +424,12 @@ public class CoursesActivity extends AppCompatActivity {
     private void parseAddIDs(String input){
         String[] IDs = input.split(",");
         for(String curr: IDs) {
-            /*if(fh.addCourseToStudent(uid, curr)){
+            //if(fh.addCourseToStudent(uid, curr)){
                 //insert success message here
-            } else{
+            //} else{
                 //insert failure message here
-            }*/
-        //    addCourse(curr);
+            //}
+           addCourse(curr);
         }
     }
 }
